@@ -10,9 +10,11 @@
 
     <ImageButton
         android:id="@+id/paper"
+        android:contentDescription="@string/design_credits"
         style="@android:style/Widget.Holo.ImageButton"
         android:layout_width="100dp"
         android:layout_height="100dp"
+        android:layout_marginStart="8dp"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="34dp"
         android:layout_marginLeft="8dp"
@@ -30,6 +32,7 @@
 
     <ImageButton
         android:id="@+id/scissor"
+        android:contentDescription="@string/design_credits"
         style="@android:style/Widget.Holo.ImageButton"
         android:layout_width="100dp"
         android:layout_height="100dp"
@@ -93,6 +96,7 @@
 
     <ImageButton
         android:id="@+id/leftHand"
+        android:contentDescription="@string/design_credits"
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:layout_marginBottom="8dp"
@@ -114,6 +118,7 @@
 
     <ImageButton
         android:id="@+id/rightHand"
+        android:contentDescription="@string/design_credits"
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:layout_marginBottom="8dp"
@@ -135,11 +140,13 @@
         android:id="@+id/labelVs"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="177dp"
         android:layout_marginBottom="8dp"
         android:layout_marginLeft="177dp"
         android:layout_marginRight="8dp"
+        android:layout_marginEnd="8dp"
         android:layout_marginTop="8dp"
-        android:text="VS"
+        android:text="@string/value_vs"
         android:textColor="@color/colorPrimaryDark"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -157,7 +164,7 @@
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginTop="8dp"
-        android:text="BEAT THE WINNER"
+        android:text="@string/string_beatTheWinner"
         android:textColor="@color/green"
         android:textSize="30sp"
         app:layout_constraintBottom_toTopOf="@+id/rock"
@@ -168,6 +175,7 @@
 
     <ImageButton
         android:id="@+id/rock"
+        android:contentDescription="@string/design_credits"
         style="@android:style/Widget.Holo.ImageButton"
         android:layout_width="100dp"
         android:layout_height="100dp"
@@ -181,7 +189,7 @@
         android:backgroundTint="@color/colorPrimaryDark"
         android:tint="@android:color/holo_blue_light"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.307"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@+id/paper"
         app:layout_constraintTop_toTopOf="parent"
@@ -196,7 +204,7 @@
         android:layout_marginRight="8dp"
         android:layout_marginTop="8dp"
         android:background="@color/colorPrimaryDark"
-        android:text="SKIP"
+        android:text="@string/value_skip"
         android:textColor="@color/background"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"

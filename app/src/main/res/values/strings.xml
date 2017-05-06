@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">ThinkQuick</string>
+    <string name="design_credits"><a target='_blank' href='https://www.vecteezy.com'>Design Credits: Vecteezy!</a></string>
+    <string name="value_vs">VS</string>
+    <string name="string_beatTheWinner">BEAT THE WINNER</string>
+    <string name="value_skip">SKIP</string>
 </resources>

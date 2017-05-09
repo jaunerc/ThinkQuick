@@ -1,12 +1,10 @@
 package ch.hslu.mobpro.proj.thinkquick.game;
 
-import ch.hslu.mobpro.proj.thinkquick.interfaces.InterfaceLife;
-
 /**
  * Created by alkazua on 05.05.2017.
  */
 
-public class Life implements InterfaceLife {
+public class Life {
     private int life;
     private boolean isAlive;
 
@@ -17,7 +15,6 @@ public class Life implements InterfaceLife {
         isAlive = alive;
     }
 
-    @Override
     public void removeLife() {
         if (isAlive()) {
             life--;
@@ -26,12 +23,10 @@ public class Life implements InterfaceLife {
         }
     }
 
-    @Override
     public int getLife() {
         return life;
     }
 
-    @Override
     public boolean isAlive() {
         return isAlive;
     }

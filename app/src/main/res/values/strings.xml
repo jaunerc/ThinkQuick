@@ -4,4 +4,18 @@
     <string name="value_vs">VS</string>
     <string name="string_beatTheWinner">BEAT THE WINNER</string>
     <string name="value_skip">SKIP</string>
+    <string name="timeView_title">Time View</string>
+    <string name="timeView_description">Don\'t let it reach zero or you will loose one life</string>
+    <string name="lifeView_title">Life View</string>
+    <string name="lifeView_description">Don\'t let it hit zero or you will be gameover!</string>
+    <string name="labelVs_title">Situation</string>
+    <string name="labelVs_description">Shows a Rock Paper Scissor situation</string>
+    <string name="challenge_title">Challenge</string>
+    <string name="challenge_description">Try and solve this challenge</string>
+    <string name="skip_title">Skip Option</string>
+    <string name="skip_description">You can skip a challenge but you will loose points</string>
+    <string name="scissor_title">Answer</string>
+    <string name="scissor_description">Paper beats Rock, so the answer is scissor</string>
+    <string name="points_title">Points</string>
+    <string name="points_description">Shows your current score</string>
 </resources>

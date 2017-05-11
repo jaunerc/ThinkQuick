@@ -8,6 +8,14 @@ public class ExerciseResult {
     private boolean correct;
     private int points;
 
+    public void setCorrect(boolean correct) {
+        this.correct = correct;
+    }
+
+    public void setPoints(int points) {
+        this.points = points;
+    }
+
     public boolean isCorrect() {
         return correct;
     }

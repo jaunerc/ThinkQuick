@@ -6,6 +6,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MotionEvent;
+import android.widget.ProgressBar;
 
 import ch.hslu.mobpro.proj.thinkquick.game.tutorial.Tutorial;
 import ch.hslu.mobpro.proj.thinkquick.game.tutorial.TutorialFactory;

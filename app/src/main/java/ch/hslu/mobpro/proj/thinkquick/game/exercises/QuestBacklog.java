@@ -9,20 +9,8 @@ import ch.hslu.mobpro.proj.thinkquick.game.Gesture;
  */
 
 public class QuestBacklog {
-    private String[] easyQuestTexts = new String[]{
-            "Win!",
-            "Lose!",
-            "Make a draw!"
-    };
-
-    private String[] hardQuestTexts = new String[]{
-            "Win against the winner!",
-            "Win against the looser!",
-            "Lose against the winner!",
-            "Lose against the looser!",
-            "Make a draw with the winner!",
-            "Make a draw with the looser!"
-    };
+    private String[] easyQuestTexts;
+    private String[] hardQuestTexts;
 
     public QuestBacklog(final String[] easyQuestTexts, final String[] hardQuestTexts) {
         this.easyQuestTexts = easyQuestTexts;
@@ -39,8 +27,11 @@ public class QuestBacklog {
         return easyQuestTexts[random.nextInt(easyQuestTexts.length)];
     }
 
-    public Quest randomEasyQuest(final Random random, final Gesture winner) {
-        return new Quest(randomEasyText(random), winner);
+    public Quest randomEasyQuest(final Random random, final Gesture gesture) {
+        final String questInfo = randomEasyText(random);
+
+
+        return new Quest(randomEasyText(random), gesture);
     }
 
     /**

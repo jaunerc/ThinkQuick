@@ -16,7 +16,7 @@ import ch.hslu.mobpro.proj.thinkquick.game.checker.ExerciseResult;
 import static junit.framework.Assert.assertEquals;
 
 /**
- * Created by Cyrill Jauner on 12/05/2017.
+ * Test for @see ch.hslu.mobpro.proj.thinkquick.database.DbAdapter.
  */
 
 @RunWith(RobolectricTestRunner.class)

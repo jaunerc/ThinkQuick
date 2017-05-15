@@ -5,4 +5,12 @@
         <item>Lose!</item>
         <item>Make a draw!</item>
     </string-array>
+    <string-array name="hardQuestInfos">
+        <item>Win against the leftHand!</item>
+        <item>Win against the rightHand!</item>
+        <item>Lose against the leftHand!</item>
+        <item>Lose against the rightHand!</item>
+        <item>Make a draw with the leftHand!</item>
+        <item>Make a draw with the rightHand!</item>
+    </string-array>
 </resources>

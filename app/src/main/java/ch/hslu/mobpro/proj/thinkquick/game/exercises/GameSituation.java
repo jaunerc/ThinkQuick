@@ -3,26 +3,26 @@ package ch.hslu.mobpro.proj.thinkquick.game.exercises;
 import ch.hslu.mobpro.proj.thinkquick.game.Gesture;
 
 /**
- * This class represents the result of a game. A result has the winner and looser of a game.
+ * This class represents the result of a game. A result has the leftHand and rightHand of a game.
  */
 
 public class GameSituation {
-    private Gesture winner;
-    private Gesture looser;
+    private Gesture leftHand;
+    private Gesture rightHand;
     private boolean isDraw;
 
-    public GameSituation(Gesture winner, Gesture looser, boolean isDraw) {
-        this.winner = winner;
-        this.looser = looser;
+    public GameSituation(Gesture leftHand, Gesture rightHand, boolean isDraw) {
+        this.leftHand = leftHand;
+        this.rightHand = rightHand;
         this.isDraw = isDraw;
     }
 
-    public Gesture getWinner() {
-        return winner;
+    public Gesture getLeftHand() {
+        return leftHand;
     }
 
-    public Gesture getLooser() {
-        return looser;
+    public Gesture getRightHand() {
+        return rightHand;
     }
 
     public boolean isDraw() {

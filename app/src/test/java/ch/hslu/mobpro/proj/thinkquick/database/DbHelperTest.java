@@ -1,9 +1,5 @@
 package ch.hslu.mobpro.proj.thinkquick.database;
 
-/**
- * Created by Cyrill Jauner on 12/05/2017.
- */
-
 import android.database.sqlite.SQLiteException;
 
 import org.junit.Test;
@@ -17,6 +13,9 @@ import ch.hslu.mobpro.proj.thinkquick.BuildConfig;
 import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertTrue;
 
+/**
+ * Test for @see ch.hslu.mobpro.proj.thinkquick.database.DbHelper.
+ */
 @RunWith(RobolectricTestRunner.class)
 @Config(constants = BuildConfig.class)
 public class DbHelperTest {

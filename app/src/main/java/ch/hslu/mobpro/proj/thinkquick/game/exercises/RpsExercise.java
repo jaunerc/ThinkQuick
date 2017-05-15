@@ -15,11 +15,11 @@ public class RpsExercise implements Exercise {
 
     @Override
     public GameSituation getGameSituation() {
-        return null;
+        return gameSituation;
     }
 
     @Override
     public Quest getQuest() {
-        return null;
+        return quest;
     }
 }

@@ -19,7 +19,10 @@ public class ExerciseFactory {
 
     public Exercise easyExercise() {
         final GameSituation gameSituation = generateEasyGameSituation();
-        return null;
+        Gesture drawGesture = RpsSolver.getDraw(gameSituation.getLeftHand());
+
+        final Quest easyQuest = questBacklog.randomEasyQuest(randomGenerator, drawGesture);
+        return new RpsExercise(gameSituation, easyQuest);
     }
 
     private GameSituation generateEasyGameSituation() {
@@ -29,7 +32,8 @@ public class ExerciseFactory {
 
     public Exercise hardExercise() {
         final GameSituation gameSituation = generateHardGameSituation();
-        return null;
+        final Quest hardQuest = questBacklog.randomHardQuest(randomGenerator, gameSituation.getLeftHand());
+        return new RpsExercise(gameSituation, hardQuest);
     }
 
     private GameSituation generateHardGameSituation() {

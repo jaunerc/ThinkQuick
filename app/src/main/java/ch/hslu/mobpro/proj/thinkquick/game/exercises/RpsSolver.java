@@ -8,6 +8,8 @@ import ch.hslu.mobpro.proj.thinkquick.game.Gesture;
 
 public class RpsSolver {
 
+    private final static int MAX = 3;
+
     private RpsSolver() {
     }
 
@@ -18,19 +20,7 @@ public class RpsSolver {
      * @return Winner gesture.
      */
     public static Gesture getWinner(final Gesture looser) {
-        Gesture winner = null;
-        switch (looser) {
-            case ROCK:
-                winner = Gesture.PAPER;
-                break;
-            case PAPER:
-                winner = Gesture.SCISSOR;
-                break;
-            case SCISSOR:
-                winner = Gesture.ROCK;
-                break;
-        }
-        return winner;
+        return Gesture.values()[mod(looser.getValue() + 1, MAX)];
     }
 
     /**
@@ -40,18 +30,18 @@ public class RpsSolver {
      * @return Looser gesture.
      */
     public static Gesture getLooser(final Gesture winner) {
-        Gesture looser = null;
-        switch (winner) {
-            case ROCK:
-                looser = Gesture.SCISSOR;
-                break;
-            case PAPER:
-                looser = Gesture.ROCK;
-                break;
-            case SCISSOR:
-                looser = Gesture.PAPER;
-                break;
+        return Gesture.values()[mod(winner.getValue() - 1, MAX)];
+    }
+
+    public static Gesture getDraw(final Gesture gesture) {
+        return gesture;
+    }
+
+    public static int mod(final int m, final int n) {
+        int r = m % n;
+        if (r < 0) {
+            r += n;
         }
-        return looser;
+        return r;
     }
 }

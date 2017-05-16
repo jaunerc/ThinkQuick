@@ -7,7 +7,7 @@ import ch.hslu.mobpro.proj.thinkquick.game.Gesture;
 import static junit.framework.Assert.assertEquals;
 
 /**
- * Created by Cyrill Jauner on 15/05/2017.
+ * Test for {@link ch.hslu.mobpro.proj.thinkquick.game.exercises.RpsSolver}.
  */
 
 public class RpsSolverTest {

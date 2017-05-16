@@ -29,18 +29,31 @@ public class GameSituation {
         return isDraw;
     }
 
+    /**
+     * Gets the winner of this situation. This method uses RpsSolver class.
+     *
+     * @return The winner gesture.
+     */
     public Gesture getWinner() {
-        Gesture winner = leftHand;
+        Gesture winner = null;
         if (RpsSolver.getWinner(leftHand) == rightHand) {
             winner = rightHand;
+        } else if (RpsSolver.getWinner(rightHand) == leftHand) {
+            winner = leftHand;
         }
         return winner;
     }
 
+    /**
+     * Gets the looser of this situation. This method uses RpsSolver class.
+     * @return The looser gesture.
+     */
     public Gesture getLooser() {
-        Gesture looser = leftHand;
-        if (getWinner() == leftHand) {
+        Gesture looser = null;
+        if (RpsSolver.getLooser(leftHand) == rightHand) {
             looser = rightHand;
+        } else if (RpsSolver.getLooser(rightHand) == leftHand) {
+            looser = leftHand;
         }
         return looser;
     }

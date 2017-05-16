@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="easyWin">Win!</string>
+    <string name="easyLoose">Loose!</string>
+    <string name="easyDraw">Make a draw!</string>
+    <string name="hardWinWin">Win against the winner!</string>
+    <string name="hardWinLoose">Win against the looser!</string>
+    <string name="hardLooseWin">Lose against the winner!</string>
+    <string name="hardLooseLoose">Lose against the looser!</string>
+    <string name="hardDrawWin">Make a draw with the winner!</string>
+    <string name="hardDrawLoose">Make a draw with the looser!</string>
+</resources>

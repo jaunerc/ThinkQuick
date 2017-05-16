@@ -19,10 +19,9 @@ public class ExerciseFactory {
 
     public Exercise easyExercise() {
         final GameSituation gameSituation = generateEasyGameSituation();
-        Gesture drawGesture = RpsSolver.getDraw(gameSituation.getLeftHand());
-
-        final Quest easyQuest = questBacklog.randomEasyQuest(randomGenerator, drawGesture);
-        return new RpsExercise(gameSituation, easyQuest);
+        final Quest quest = questBacklog.randomEasyQuest(randomGenerator);
+        solveQuest(quest, gameSituation);
+        return new RpsExercise(gameSituation, quest);
     }
 
     private GameSituation generateEasyGameSituation() {
@@ -32,7 +31,8 @@ public class ExerciseFactory {
 
     public Exercise hardExercise() {
         final GameSituation gameSituation = generateHardGameSituation();
-        final Quest hardQuest = questBacklog.randomHardQuest(randomGenerator, gameSituation.getLeftHand());
+        final Quest hardQuest = questBacklog.randomHardQuest(randomGenerator);
+        solveQuest(hardQuest, gameSituation);
         return new RpsExercise(gameSituation, hardQuest);
     }
 
@@ -45,5 +45,45 @@ public class ExerciseFactory {
     private Gesture pickRandomGesture() {
         final Gesture[] gestures = Gesture.values();
         return gestures[randomGenerator.nextInt(gestures.length)];
+    }
+
+    private void solveQuest(final Quest quest, final GameSituation situation) {
+        Gesture answer = null;
+        if (situation.isDraw()) {
+            switch (quest.getQuestTarget()) {
+                case WIN:
+                    answer = RpsSolver.getWinner(situation.getLeftHand());
+                    break;
+                case LOSE:
+                    answer = RpsSolver.getLooser(situation.getLeftHand());
+                    break;
+                case DRAW:
+                    answer = RpsSolver.getDraw(situation.getLeftHand());
+            }
+        } else {
+            switch (quest.getQuestTarget()) {
+                case WIN:
+                    if (quest.isAgainstWinner()) {
+                        answer = RpsSolver.getWinner(situation.getWinner());
+                    } else {
+                        answer = RpsSolver.getWinner(situation.getLooser());
+                    }
+                    break;
+                case LOSE:
+                    if (quest.isAgainstWinner()) {
+                        answer = RpsSolver.getLooser(situation.getWinner());
+                    } else {
+                        answer = RpsSolver.getLooser(situation.getLooser());
+                    }
+                    break;
+                case DRAW:
+                    if (quest.isAgainstWinner()) {
+                        answer = RpsSolver.getDraw(situation.getWinner());
+                    } else {
+                        answer = RpsSolver.getDraw(situation.getLooser());
+                    }
+            }
+        }
+        quest.setAnswer(answer);
     }
 }

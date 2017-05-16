@@ -28,4 +28,20 @@ public class GameSituation {
     public boolean isDraw() {
         return isDraw;
     }
+
+    public Gesture getWinner() {
+        Gesture winner = leftHand;
+        if (RpsSolver.getWinner(leftHand) == rightHand) {
+            winner = rightHand;
+        }
+        return winner;
+    }
+
+    public Gesture getLooser() {
+        Gesture looser = leftHand;
+        if (getWinner() == leftHand) {
+            looser = rightHand;
+        }
+        return looser;
+    }
 }

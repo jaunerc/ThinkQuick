@@ -5,8 +5,9 @@ import org.junit.Test;
 
 import ch.hslu.mobpro.proj.thinkquick.game.Gesture;
 import ch.hslu.mobpro.proj.thinkquick.game.exercises.Quest;
+import ch.hslu.mobpro.proj.thinkquick.game.exercises.QuestTarget;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 /**
  * Created by Alan Meile on 11.05.2017.
@@ -22,7 +23,7 @@ public class ResultCheckerTest {
     @Before
     public void setUp() throws Exception {
         resultChecker = new ResultChecker(MAX_PROGRESS);
-        quest = new Quest("Just a test", QUEST_ANSWER);
+        quest = new Quest("just a quest", Gesture.PAPER, QuestTarget.WIN, true);
     }
 
     @Test

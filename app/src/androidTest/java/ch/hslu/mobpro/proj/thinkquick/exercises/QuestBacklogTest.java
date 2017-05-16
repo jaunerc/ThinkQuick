@@ -29,7 +29,7 @@ public class QuestBacklogTest {
         String[] easyQuests = context.getResources().getStringArray(R.array.easyQuestInfos);
         String[] hardQuests = context.getResources().getStringArray(R.array.hardQuestInfos);
         QuestBacklog backlog = new QuestBacklog(easyQuests, hardQuests);
-        Quest easyQuest = backlog.randomEasyQuest(new Random(), Gesture.ROCK);
+        Quest easyQuest = backlog.randomEasyQuest(new Random());
         assertEquals(Gesture.ROCK, easyQuest.getAnswer());
     }
 
@@ -39,7 +39,7 @@ public class QuestBacklogTest {
         String[] easyQuests = context.getResources().getStringArray(R.array.easyQuestInfos);
         String[] hardQuests = context.getResources().getStringArray(R.array.hardQuestInfos);
         QuestBacklog backlog = new QuestBacklog(easyQuests, hardQuests);
-        Quest hardQuest = backlog.randomEasyQuest(new Random(), Gesture.PAPER);
+        Quest hardQuest = backlog.randomEasyQuest(new Random());
         assertEquals(Gesture.PAPER, hardQuest.getAnswer());
     }
 }

@@ -32,14 +32,14 @@ public class RPSGame implements Game {
     }
 
     private void initExerciseFactory() {
-        String[] easyQuestInfos = gameView.getResources().getStringArray(R.array.easyQuestInfos);
-        String[] hardQuestInfos = gameView.getResources().getStringArray(R.array.hardQuestInfos);
-        exerciseFactory = new ExerciseFactory(new Random(), new QuestBacklog(easyQuestInfos, hardQuestInfos));
+        QuestBacklog questBacklog = new QuestBacklog();
+        questBacklog.initQuests(gameView);
+        exerciseFactory = new ExerciseFactory(new Random(), questBacklog);
     }
 
     @Override
     public void nextExercise() {
-        if (new Random().nextInt(1) == 1) {
+        if (new Random().nextInt(5) >= 2) {
             currentExercise = exerciseFactory.hardExercise();
         } else {
             currentExercise = exerciseFactory.easyExercise();
@@ -65,6 +65,7 @@ public class RPSGame implements Game {
     }
 
     public GameSituation getGameSituation() {
+        if (currentExercise == null) nextExercise();
         return currentExercise.getGameSituation();
     }
 

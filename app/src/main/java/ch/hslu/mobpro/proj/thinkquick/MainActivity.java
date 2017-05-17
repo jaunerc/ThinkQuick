@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
-    private final static boolean TEST_MODE = true;
+    private final static boolean TEST_MODE = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

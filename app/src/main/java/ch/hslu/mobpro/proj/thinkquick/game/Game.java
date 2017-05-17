@@ -1,5 +1,7 @@
 package ch.hslu.mobpro.proj.thinkquick.game;
 
+import android.content.Context;
+
 import ch.hslu.mobpro.proj.thinkquick.game.checker.ExerciseResult;
 
 /**
@@ -7,7 +9,7 @@ import ch.hslu.mobpro.proj.thinkquick.game.checker.ExerciseResult;
  */
 
 public interface Game {
-    void start();
+    void start(Context context);
     void nextExercise();
     void skip();
     void pause();

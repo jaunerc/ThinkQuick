@@ -1,13 +1,18 @@
 package ch.hslu.mobpro.proj.thinkquick;
 
 import android.content.SharedPreferences;
-import android.graphics.Color;
+import android.graphics.drawable.Drawable;
+import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.MotionEvent;
-import android.widget.ProgressBar;
+import android.widget.ImageButton;
+import android.widget.TextView;
 
+import ch.hslu.mobpro.proj.thinkquick.game.Gesture;
+import ch.hslu.mobpro.proj.thinkquick.game.RPSGame;
+import ch.hslu.mobpro.proj.thinkquick.game.exercises.GameSituation;
+import ch.hslu.mobpro.proj.thinkquick.game.exercises.Quest;
 import ch.hslu.mobpro.proj.thinkquick.game.tutorial.Tutorial;
 import ch.hslu.mobpro.proj.thinkquick.game.tutorial.TutorialFactory;
 import uk.co.samuelwall.materialtaptargetprompt.MaterialTapTargetPrompt;
@@ -15,8 +20,10 @@ import uk.co.samuelwall.materialtaptargetprompt.MaterialTapTargetPrompt;
 public class GameActivity extends AppCompatActivity {
     private int TUTORIAL_COLOR;
     private SharedPreferences sharedPreferences;
-    private boolean tutorialDone;
     private TutorialFactory tutorialFactory;
+    private GameSituation currentGameSituation;
+    private Quest currentQuest;
+    private RPSGame rpsGame;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +32,44 @@ public class GameActivity extends AppCompatActivity {
 
         TUTORIAL_COLOR = ContextCompat.getColor(this, R.color.colorPrimaryDark);
         checkUserNeedTutorial();
+
+        startGame();
+    }
+
+    private void startGame() {
+        initGame();
+        handOverActivityContext();
+        //currentGameSituation = getGameSituation();
+        //currentQuest = getQuest();
+        //updateView();
+    }
+
+    private void updateView() {
+        ImageButton leftHand = (ImageButton) findViewById(R.id.leftHand);
+        ImageButton rightHand = (ImageButton) findViewById(R.id.rightHand);
+        TextView quest = (TextView) findViewById(R.id.challenge);
+
+        leftHand.setBackground(getDrawableId(currentGameSituation.getLeftHand()));
+        rightHand.setBackground(getDrawableId(currentGameSituation.getRightHand()));
+        quest.setText(currentQuest.getInfo());
+    }
+
+    private Drawable getDrawableId(Gesture currentHand) {
+        Drawable drawableId = ContextCompat.getDrawable(this, R.drawable.ic_scissor);
+        if (currentHand == Gesture.ROCK) {
+            drawableId = ContextCompat.getDrawable(this, R.drawable.ic_rock);
+        } else if (currentHand == Gesture.PAPER) {
+            drawableId = ContextCompat.getDrawable(this, R.drawable.ic_paper);
+        }
+        return drawableId;
+    }
+
+    private void handOverActivityContext() {
+        rpsGame.start(this);
+    }
+
+    private void initGame() {
+        rpsGame = new RPSGame();
     }
 
     private void checkUserNeedTutorial() {
@@ -63,5 +108,13 @@ public class GameActivity extends AppCompatActivity {
                         }
                     }
                 }).show();
+    }
+
+    private GameSituation getGameSituation() {
+        return rpsGame.getGameSituation();
+    }
+
+    private Quest getQuest() {
+        return rpsGame.getQuest();
     }
 }

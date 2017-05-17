@@ -25,4 +25,11 @@ public class RpsSolverTest {
         assertEquals(Gesture.PAPER, RpsSolver.getLooser(Gesture.SCISSOR));
         assertEquals(Gesture.SCISSOR, RpsSolver.getLooser(Gesture.ROCK));
     }
+
+    @Test
+    public void testGetDraw() {
+        assertEquals(Gesture.ROCK, RpsSolver.getDraw(Gesture.ROCK));
+        assertEquals(Gesture.PAPER, RpsSolver.getDraw(Gesture.PAPER));
+        assertEquals(Gesture.SCISSOR, RpsSolver.getDraw(Gesture.SCISSOR));
+    }
 }

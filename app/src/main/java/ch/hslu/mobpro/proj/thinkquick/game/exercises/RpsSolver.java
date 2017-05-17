@@ -8,7 +8,7 @@ import ch.hslu.mobpro.proj.thinkquick.game.Gesture;
 
 public class RpsSolver {
 
-    private final static int MAX = 3;
+    private final static int MAX = Gesture.values().length;
 
     private RpsSolver() {
     }
@@ -33,10 +33,22 @@ public class RpsSolver {
         return Gesture.values()[mod(winner.getValue() - 1, MAX)];
     }
 
+    /**
+     * Returns the gesture for a draw based on the given gesture.
+     *
+     * @param gesture Gesture.
+     * @return Draw gesture.
+     */
     public static Gesture getDraw(final Gesture gesture) {
         return gesture;
     }
 
+    /**
+     * Mathematical modulo operation.
+     * @param m Dividend.
+     * @param n divisor.
+     * @return m modulo n.
+     */
     public static int mod(final int m, final int n) {
         int r = m % n;
         if (r < 0) {

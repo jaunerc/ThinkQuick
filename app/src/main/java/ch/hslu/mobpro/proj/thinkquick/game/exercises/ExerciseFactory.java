@@ -17,6 +17,11 @@ public class ExerciseFactory {
         this.questBacklog = questBacklog;
     }
 
+    /**
+     * Creates a easy exercise. The QuestBacklog must be initialized.
+     *
+     * @return Easy exercise.
+     */
     public Exercise easyExercise() {
         final GameSituation gameSituation = generateEasyGameSituation();
         final Quest quest = questBacklog.randomEasyQuest(randomGenerator);
@@ -24,11 +29,19 @@ public class ExerciseFactory {
         return new RpsExercise(gameSituation, quest);
     }
 
+    /**
+     * Generates a easy GameSituation. The left and right hand are equals.
+     * @return Easy gamesituation.
+     */
     private GameSituation generateEasyGameSituation() {
         final Gesture gesture = pickRandomGesture();
         return new GameSituation(gesture, gesture, true);
     }
 
+    /**
+     * Creates a hard exercise.
+     * @return Hard exercise.
+     */
     public Exercise hardExercise() {
         final GameSituation gameSituation = generateHardGameSituation();
         final Quest hardQuest = questBacklog.randomHardQuest(randomGenerator);
@@ -36,17 +49,30 @@ public class ExerciseFactory {
         return new RpsExercise(gameSituation, hardQuest);
     }
 
+    /**
+     * Generates a hard GameSituation.
+     * @return Hard gamesituation.
+     */
     private GameSituation generateHardGameSituation() {
         final Gesture winner = pickRandomGesture();
         final Gesture looser = RpsSolver.getLooser(winner);
         return new GameSituation(winner, looser, false);
     }
 
+    /**
+     * Picks a random gesture.
+     * @return Gesture.
+     */
     private Gesture pickRandomGesture() {
         final Gesture[] gestures = Gesture.values();
         return gestures[randomGenerator.nextInt(gestures.length)];
     }
 
+    /**
+     * Solves the given quest based on the given situation.
+     * @param quest The quest to solve.
+     * @param situation The initial situation.
+     */
     private void solveQuest(final Quest quest, final GameSituation situation) {
         Gesture answer = null;
         if (situation.isDraw()) {

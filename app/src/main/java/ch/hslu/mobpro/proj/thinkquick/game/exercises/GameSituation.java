@@ -32,7 +32,7 @@ public class GameSituation {
     /**
      * Gets the winner of this situation. This method uses the RpsSolver class.
      *
-     * @return The winner gesture.
+     * @return The winner gesture or null if it is a draw.
      */
     public Gesture getWinner() {
         Gesture winner = null;
@@ -46,7 +46,7 @@ public class GameSituation {
 
     /**
      * Gets the looser of this situation. This method uses the RpsSolver class.
-     * @return The looser gesture.
+     * @return The looser gesture or null if it is a draw.
      */
     public Gesture getLooser() {
         Gesture looser = null;

@@ -110,8 +110,8 @@ public class RPSGame implements Game {
     }
 
     private void showCountDownActivity() {
-        Intent intent = new Intent(gameView, CountdownActivity.class);
-        gameView.startActivity(intent);
+        Intent countDownActivity = new Intent(gameView, CountdownActivity.class);
+        gameView.startActivity(countDownActivity);
     }
 
     @Override

@@ -90,7 +90,7 @@ public class GameActivity extends AppCompatActivity {
             rpsGame.deductPlayerLife();
         }
 
-        startCountDownBeforeGame();
+        //startCountDownBeforeGame();
     }
 
     private void startCountDownBeforeGame() {

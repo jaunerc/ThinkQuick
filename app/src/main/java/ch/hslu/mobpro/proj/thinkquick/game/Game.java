@@ -11,7 +11,19 @@ import ch.hslu.mobpro.proj.thinkquick.game.checker.ExerciseResult;
 public interface Game {
     void start(Context context);
     void nextExercise();
+
+    void gameOver();
     void skip();
     void pause();
+
+    void timeUp();
     ExerciseResult solveWith(Gesture answer);
+
+    void deductPlayerLife();
+
+    int getPlayerLife();
+
+    void awardPlayerPoints(int awardedPoints);
+
+    int getPlayerPoints();
 }

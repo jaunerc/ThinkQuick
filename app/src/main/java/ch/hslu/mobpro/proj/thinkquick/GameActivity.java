@@ -8,12 +8,12 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
 import ch.hslu.mobpro.proj.thinkquick.game.Gesture;
-import ch.hslu.mobpro.proj.thinkquick.game.PlayerStats;
 import ch.hslu.mobpro.proj.thinkquick.game.RPSGame;
 import ch.hslu.mobpro.proj.thinkquick.game.checker.ExerciseResult;
 import ch.hslu.mobpro.proj.thinkquick.game.exercises.GameSituation;
@@ -23,15 +23,12 @@ import ch.hslu.mobpro.proj.thinkquick.game.tutorial.TutorialFactory;
 import uk.co.samuelwall.materialtaptargetprompt.MaterialTapTargetPrompt;
 
 public class GameActivity extends AppCompatActivity {
-    private final static int START_POINTS = 0;
-    private final static int START_LIFE = 3;
     private Intent countdownActivity;
     private SharedPreferences sharedPreferences;
     private TutorialFactory tutorialFactory;
     private GameSituation currentGameSituation;
     private Quest currentQuest;
     private RPSGame rpsGame;
-    private PlayerStats playerStats;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,11 +46,12 @@ public class GameActivity extends AppCompatActivity {
         ImageButton rock = (ImageButton) findViewById(R.id.rock);
         ImageButton paper = (ImageButton) findViewById(R.id.paper);
         ImageButton scissor = (ImageButton) findViewById(R.id.scissor);
+        Button skip = (Button) findViewById(R.id.skip);
 
-        setOnClickListener(rock, paper, scissor);
+        setOnClickListener(rock, paper, scissor, skip);
     }
 
-    private void setOnClickListener(ImageButton rock, ImageButton paper, ImageButton scissor) {
+    private void setOnClickListener(ImageButton rock, ImageButton paper, ImageButton scissor, Button skip) {
         rock.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -71,7 +69,15 @@ public class GameActivity extends AppCompatActivity {
         scissor.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                playerAnswerWith(Gesture.ROCK);
+                playerAnswerWith(Gesture.SCISSOR);
+            }
+        });
+
+        skip.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                rpsGame.skip();
             }
         });
     }
@@ -79,15 +85,15 @@ public class GameActivity extends AppCompatActivity {
     private void playerAnswerWith(Gesture answer) {
         ExerciseResult playerResult = rpsGame.solveWith(answer);
         if (playerResult.isCorrect()) {
-            playerStats.awardPoints(playerResult.getPoints());
+            rpsGame.awardPlayerPoints(playerResult.getPoints());
         } else {
-            playerStats.deductLife();
+            rpsGame.deductPlayerLife();
         }
 
-        startCountDown();
+        startCountDownBeforeGame();
     }
 
-    private void startCountDown() {
+    private void startCountDownBeforeGame() {
         startActivity(countdownActivity);
     }
 
@@ -108,18 +114,13 @@ public class GameActivity extends AppCompatActivity {
         TextView pointsView = (TextView) findViewById(R.id.labelPoints);
         RatingBar lifeView = (RatingBar) findViewById(R.id.lifeView);
 
-        pointsView.setText(Integer.toString(playerStats.getPoints()));
-        lifeView.setRating(playerStats.getLife());
+        pointsView.setText(Integer.toString(rpsGame.getPlayerPoints()));
+        lifeView.setRating(rpsGame.getPlayerLife());
     }
 
     private void startGame() {
-        createOrUpdatePlayerStats();
         initGame();
         handOverActivityContext();
-    }
-
-    private void createOrUpdatePlayerStats() {
-        playerStats = new PlayerStats(this, START_POINTS, START_LIFE);
     }
 
     private void updateView() {
@@ -184,7 +185,7 @@ public class GameActivity extends AppCompatActivity {
                         if (tutorialFactory.hasTutorials()) {
                             displayTutorial(tutorialFactory.getNext());
                         } else {
-                            startCountDown();
+                            startCountDownBeforeGame();
                         }
                     }
                 }).show();

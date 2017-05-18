@@ -25,6 +25,8 @@ public class MainActivity extends AppCompatActivity {
         Button play = (Button) findViewById(R.id.mainPlay);
         Button highscore = (Button) findViewById(R.id.mainHighscore);
 
+        resetPlayerStats();
+
         play.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -40,6 +42,13 @@ public class MainActivity extends AppCompatActivity {
                 finish();
             }
         });
+    }
+
+    private void resetPlayerStats() {
+        String packageName = getPackageName();
+        SharedPreferences sharedPreferences = getSharedPreferences(packageName, MODE_PRIVATE);
+        sharedPreferences.edit().putInt("PlayerPoints", 0).commit();
+        sharedPreferences.edit().putInt("PlayerLife", 3).commit();
     }
 
     private void runTestMode() {

@@ -20,7 +20,8 @@
         <activity android:name=".GameActivity" />
         <activity android:name=".HighscoreActivity" />
         <activity android:name=".PointsDistributionActivity" />
-        <activity android:name=".CountdownActivity"></activity>
+        <activity android:name=".CountdownActivity" />
+        <activity android:name=".GameOverActivity"></activity>
     </application>
 
 </manifest>

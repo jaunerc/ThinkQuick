@@ -24,7 +24,7 @@ import ch.hslu.mobpro.proj.thinkquick.game.exercises.QuestBacklog;
  */
 
 public class RPSGame implements Game {
-    private final static int MAX_PROGRESS = 100;
+    private final static int MAX_PROGRESS = 50;
     private final static int MIN_PROGRESS = 0;
     private final static int START_POINTS = 0;
     private final static int START_LIFE = 3;
@@ -60,6 +60,7 @@ public class RPSGame implements Game {
 
     private void startProgressCountDown() {
         ProgressBar progressBar = (ProgressBar) ((Activity) gameView).findViewById(R.id.timeView);
+        progressBar.setMax(MAX_PROGRESS);
         progressTime = new ProgressTime(progressBar, this).execute(MAX_PROGRESS, MIN_PROGRESS);
     }
 

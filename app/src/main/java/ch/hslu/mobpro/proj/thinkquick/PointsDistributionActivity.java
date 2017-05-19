@@ -12,6 +12,7 @@ import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 
+import ch.hslu.mobpro.proj.thinkquick.database.DbAdapter;
 import ch.hslu.mobpro.proj.thinkquick.game.checker.PointCalculator;
 
 public class PointsDistributionActivity extends AppCompatActivity {
@@ -19,6 +20,8 @@ public class PointsDistributionActivity extends AppCompatActivity {
     private SharedPreferences sharedPreferences;
     private Button backToMenu;
     private Intent mainActivity;
+    private CheckBox highscoreBox;
+    private DbAdapter dbAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,7 +30,9 @@ public class PointsDistributionActivity extends AppCompatActivity {
 
         mainActivity = new Intent(this, MainActivity.class);
 
+        dbAdapter = new DbAdapter(this);
         tutorialBox = (CheckBox) findViewById(R.id.checkBoxTutorial);
+        highscoreBox = (CheckBox) findViewById(R.id.deleteAllContent);
         backToMenu = (Button) findViewById(R.id.buttonBackToMain);
 
         setupSharedPreferences();
@@ -48,6 +53,15 @@ public class PointsDistributionActivity extends AppCompatActivity {
             public void onClick(View v) {
                 boolean isChecked = tutorialBox.isChecked();
                 sharedPreferences.edit().putBoolean("firstrun", isChecked).commit();
+            }
+        });
+
+        highscoreBox.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                dbAdapter.open();
+                dbAdapter.clearAllContent();
             }
         });
 
@@ -80,5 +94,10 @@ public class PointsDistributionActivity extends AppCompatActivity {
 
         LineGraphSeries<DataPoint> series = new LineGraphSeries<>(pointSerie);
         graph.addSeries(series);
+    }
+
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(this, MainActivity.class));
     }
 }

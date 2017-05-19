@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -54,7 +55,8 @@ public class DbAdapter {
      */
     public void insert(final ExerciseResult result) throws IOException {
         final ContentValues values = new ContentValues();
-        values.put("date", new Date().toString());
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd");
+        values.put("date", simpleDateFormat.format(new Date()));
         values.put("points", result.getPoints());
         final long id = db.insert(DB_RESULT_TABLE, null, values);
         if (id == SQLITE_ERROR_CODE) {
@@ -64,7 +66,8 @@ public class DbAdapter {
 
     public void insert(final int points, final Date date) throws IOException {
         final ContentValues values = new ContentValues();
-        values.put("date", date.toString());
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd");
+        values.put("date", simpleDateFormat.format(date));
         values.put("points", points);
         final long id = db.insert(DB_RESULT_TABLE, null, values);
         if (id == SQLITE_ERROR_CODE) {
@@ -102,6 +105,10 @@ public class DbAdapter {
             throw new IOException("Could not read from table " + tableName);
         }
         return cursor;
+    }
+
+    public void clearAllContent() {
+        db.execSQL("delete from " + DB_RESULT_TABLE);
     }
 
     /**

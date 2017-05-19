@@ -8,7 +8,7 @@ import android.widget.ProgressBar;
  */
 
 public class ProgressTime extends AsyncTask<Integer, Integer, String> {
-    private final static int INTERVAL = 40;
+    private final static int INTERVAL = 10;
     private RPSGame rpsGame;
     private ProgressBar progressBar;
 
@@ -20,9 +20,15 @@ public class ProgressTime extends AsyncTask<Integer, Integer, String> {
         this.progressBar = progressBar;
     }
 
+    /**
+     * ToDo Optimierung, Zeit verkürzen
+     *
+     * @param params
+     * @return
+     */
     @Override
     protected String doInBackground(Integer... params) {
-        for (int count = params[0] - 1; count >= params[1]; count--) {
+        for (int count = params[0] - 1; count >= params[1]; count = count - 1) {
             try {
                 Thread.sleep(INTERVAL);
                 publishProgress(count);
@@ -30,6 +36,7 @@ public class ProgressTime extends AsyncTask<Integer, Integer, String> {
                 e.printStackTrace();
             }
         }
+
         return null;
     }
 

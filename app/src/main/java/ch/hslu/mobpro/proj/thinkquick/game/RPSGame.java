@@ -122,6 +122,7 @@ public class RPSGame implements Game {
     @Override
     public void awardPlayerPoints(int awardedPoints) {
         playerStats.awardPoints(awardedPoints);
+        showCountDownActivity();
     }
 
     @Override

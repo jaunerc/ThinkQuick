@@ -21,9 +21,11 @@ public class MainActivity extends AppCompatActivity {
 
         final Intent gameActivity = new Intent(this, GameActivity.class);
         final Intent hightscoreActivity = new Intent(this, HighscoreActivity.class);
+        final Intent settingActivity = new Intent(this, PointsDistributionActivity.class);
 
         Button play = (Button) findViewById(R.id.mainPlay);
         Button highscore = (Button) findViewById(R.id.mainHighscore);
+        Button settings = (Button) findViewById(R.id.mainMenuSettings);
 
         resetPlayerStats();
 
@@ -39,6 +41,15 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(hightscoreActivity);
+                finish();
+            }
+        });
+
+        settings.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                startActivity(settingActivity);
                 finish();
             }
         });

@@ -18,4 +18,5 @@
     <string name="scissor_description">Paper beats Rock, so the answer is scissor</string>
     <string name="points_title">Points</string>
     <string name="points_description">Shows your current score</string>
+    <string name="gameover_points_description">Points:</string>
 </resources>

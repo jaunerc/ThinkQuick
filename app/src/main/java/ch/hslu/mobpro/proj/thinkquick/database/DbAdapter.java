@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import ch.hslu.mobpro.proj.thinkquick.game.checker.ExerciseResult;
@@ -53,8 +54,18 @@ public class DbAdapter {
      */
     public void insert(final ExerciseResult result) throws IOException {
         final ContentValues values = new ContentValues();
-        values.put("date", "12.05.2017");
+        values.put("date", new Date().toString());
         values.put("points", result.getPoints());
+        final long id = db.insert(DB_RESULT_TABLE, null, values);
+        if (id == SQLITE_ERROR_CODE) {
+            throw new IOException("The result could not be inserted.");
+        }
+    }
+
+    public void insert(final int points, final Date date) throws IOException {
+        final ContentValues values = new ContentValues();
+        values.put("date", date.toString());
+        values.put("points", points);
         final long id = db.insert(DB_RESULT_TABLE, null, values);
         if (id == SQLITE_ERROR_CODE) {
             throw new IOException("The result could not be inserted.");
@@ -67,8 +78,8 @@ public class DbAdapter {
      * @return A list with all results.
      * @throws IOException If the results could not be read.
      */
-    public List<ExerciseResult> getAllResults() throws IOException {
-        final List<ExerciseResult> results = new ArrayList<>();
+    public List<DbResultsEntry> getAllResults() throws IOException {
+        final List<DbResultsEntry> results = new ArrayList<>();
         final Cursor cursor = initAllResultCursor(DB_RESULT_TABLE);
         while (!cursor.isAfterLast()) {
             results.add(fetchResultFromCursor(cursor));
@@ -99,9 +110,10 @@ public class DbAdapter {
      * @param cursor Database cursor.
      * @return The current result.
      */
-    private ExerciseResult fetchResultFromCursor(final Cursor cursor) {
-        final ExerciseResult currentResult = new ExerciseResult();
+    private DbResultsEntry fetchResultFromCursor(final Cursor cursor) {
+        final DbResultsEntry currentResult = new DbResultsEntry();
         currentResult.setPoints(cursor.getInt(1));
+        currentResult.setDate(cursor.getString(0));
         return currentResult;
     }
 }

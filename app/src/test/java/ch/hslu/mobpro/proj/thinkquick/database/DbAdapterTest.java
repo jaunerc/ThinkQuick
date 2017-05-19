@@ -37,7 +37,7 @@ public class DbAdapterTest {
         result.setPoints(1000);
         try {
             adapter.insert(result);
-            List<ExerciseResult> results = adapter.getAllResults();
+            List<DbResultsEntry> results = adapter.getAllResults();
             assertEquals(1, results.size());
             assertEquals(1000, results.get(0).getPoints());
         } catch (IOException e) {

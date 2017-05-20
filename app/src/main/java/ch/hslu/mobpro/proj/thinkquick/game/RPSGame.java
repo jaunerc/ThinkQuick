@@ -24,7 +24,7 @@ import ch.hslu.mobpro.proj.thinkquick.game.exercises.QuestBacklog;
  */
 
 public class RPSGame implements Game {
-    private final static int MAX_PROGRESS = 50;
+    private final static int MAX_PROGRESS = 80;
     private final static int MIN_PROGRESS = 0;
     private final static int START_POINTS = 0;
     private final static int START_LIFE = 3;

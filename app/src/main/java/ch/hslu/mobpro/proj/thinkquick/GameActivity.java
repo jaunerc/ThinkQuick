@@ -2,6 +2,7 @@ package ch.hslu.mobpro.proj.thinkquick;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
@@ -12,6 +13,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import ch.hslu.mobpro.proj.thinkquick.game.Gesture;
 import ch.hslu.mobpro.proj.thinkquick.game.RPSGame;
@@ -38,8 +40,13 @@ public class GameActivity extends AppCompatActivity {
         countdownActivity = new Intent(this, CountdownActivity.class);
 
         setupSharedPreferences();
+        isProgressPaused(false);
         initializeUserControls();
         checkUserNeedTutorial();
+    }
+
+    private void isProgressPaused(boolean paused) {
+        sharedPreferences.edit().putBoolean("onPausedProgress", paused).commit();
     }
 
     private void initializeUserControls() {
@@ -195,5 +202,37 @@ public class GameActivity extends AppCompatActivity {
 
     private Quest getQuest() {
         return rpsGame.getQuest();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        rpsGame.pause();
+        isProgressPaused(true);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (sharedPreferences.getBoolean("onPausedProgress", false)) {
+            rpsGame.resume();
+        }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        rpsGame.stop();
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+
+        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            Toast.makeText(this, "landscape", Toast.LENGTH_SHORT).show();
+        } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT){
+            Toast.makeText(this, "portrait", Toast.LENGTH_SHORT).show();
+        }
     }
 }

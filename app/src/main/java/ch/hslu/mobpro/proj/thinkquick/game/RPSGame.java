@@ -23,22 +23,23 @@ import ch.hslu.mobpro.proj.thinkquick.game.exercises.QuestBacklog;
  * Created by Alan Meile on 15.05.2017.
  */
 
-public class RPSGame implements Game {
+public class RPSGame {
     private final static int MAX_PROGRESS = 80;
     private final static int MIN_PROGRESS = 0;
     private final static int START_POINTS = 0;
     private final static int START_LIFE = 3;
+    private int progressPausedAt;
     private AsyncTask<Integer, Integer, String> progressTime;
     private PlayerStats playerStats;
     private ExerciseFactory exerciseFactory;
     private Exercise currentExercise;
     private Context gameView;
+    private ProgressBar progressBar;
 
-
-    @Override
     public void start(Context gameView) {
         this.gameView = gameView;
         playerStats = new PlayerStats(gameView, START_POINTS, START_LIFE);
+        progressBar = (ProgressBar) ((Activity) gameView).findViewById(R.id.timeView);
         initExerciseFactory();
     }
 
@@ -48,7 +49,6 @@ public class RPSGame implements Game {
         exerciseFactory = new ExerciseFactory(new Random(), questBacklog);
     }
 
-    @Override
     public void nextExercise() {
         startProgressCountDown();
         if (new Random().nextInt(5) >= 2) {
@@ -59,35 +59,43 @@ public class RPSGame implements Game {
     }
 
     private void startProgressCountDown() {
-        ProgressBar progressBar = (ProgressBar) ((Activity) gameView).findViewById(R.id.timeView);
         progressBar.setMax(MAX_PROGRESS);
         progressTime = new ProgressTime(progressBar, this).execute(MAX_PROGRESS, MIN_PROGRESS);
     }
 
-    @Override
+    private void startProgressCountDown(int currentProgress) {
+        progressBar.setMax(MAX_PROGRESS);
+        progressTime = new ProgressTime(progressBar, this).execute(currentProgress, MIN_PROGRESS);
+    }
+
     public void gameOver() {
         Intent gameOver = new Intent(gameView, GameOverActivity.class);
         gameView.startActivity(gameOver);
     }
 
-    @Override
     public void skip() {
         stopProgressBarTask();
         playerStats.awardPoints(-100);
         showCountDownActivity();
     }
 
-    @Override
     public void pause() {
-
+        stopProgressBarTask();
+        progressPausedAt = progressBar.getProgress();
     }
 
-    @Override
+    public void stop() {
+        stopProgressBarTask();
+    }
+
+    public void resume() {
+        startProgressCountDown(progressPausedAt);
+    }
+
     public void timeUp() {
         deductPlayerLife();
     }
 
-    @Override
     public ExerciseResult solveWith(Gesture answer) {
         stopProgressBarTask();
         ProgressBar progressBar = getGameViewProgressBar();
@@ -100,7 +108,6 @@ public class RPSGame implements Game {
         progressTime.cancel(true);
     }
 
-    @Override
     public void deductPlayerLife() {
         if (playerStats.getLife() > 0) {
             playerStats.deductLife();
@@ -115,18 +122,15 @@ public class RPSGame implements Game {
         gameView.startActivity(countDownActivity);
     }
 
-    @Override
     public int getPlayerLife() {
         return playerStats.getLife();
     }
 
-    @Override
     public void awardPlayerPoints(int awardedPoints) {
         playerStats.awardPoints(awardedPoints);
         showCountDownActivity();
     }
 
-    @Override
     public int getPlayerPoints() {
         return playerStats.getPoints();
     }

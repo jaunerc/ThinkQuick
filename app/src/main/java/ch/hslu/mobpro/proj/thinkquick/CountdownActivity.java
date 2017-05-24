@@ -5,11 +5,13 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class CountdownActivity extends AppCompatActivity {
     private final static int COUNTDOWNINMILLIS = 4000;
     private final static int INTERVALINMILLIS = 1000;
     private TextView countdownView;
+    private CountDownTimer countDownTimer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,7 +25,7 @@ public class CountdownActivity extends AppCompatActivity {
         countdownView = (TextView) findViewById(R.id.countdownView);
         final Intent gameActivity = new Intent(this, GameActivity.class);
 
-        new CountDownTimer(COUNTDOWNINMILLIS, INTERVALINMILLIS) {
+        countDownTimer = new CountDownTimer(COUNTDOWNINMILLIS, INTERVALINMILLIS) {
             @Override
             public void onTick(long millisUntilFinished) {
                 int count = (int) (millisUntilFinished / INTERVALINMILLIS);
@@ -35,5 +37,23 @@ public class CountdownActivity extends AppCompatActivity {
                 startActivity(gameActivity);
             }
         }.start();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        countDownTimer.cancel();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        countDownTimer.start();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        countDownTimer.cancel();
     }
 }

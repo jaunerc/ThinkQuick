@@ -20,12 +20,6 @@ public class ProgressTime extends AsyncTask<Integer, Integer, String> {
         this.progressBar = progressBar;
     }
 
-    /**
-     * ToDo Optimierung, Zeit verkürzen
-     *
-     * @param params
-     * @return
-     */
     @Override
     protected String doInBackground(Integer... params) {
         for (int count = params[0] - 1; count >= params[1]; count = count - 1) {
@@ -42,7 +36,9 @@ public class ProgressTime extends AsyncTask<Integer, Integer, String> {
 
     @Override
     protected void onPostExecute(String result) {
-        rpsGame.timeUp();
+        if(!isCancelled()) {
+            rpsGame.timeUp();
+        }
     }
 
     @Override

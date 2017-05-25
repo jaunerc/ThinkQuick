@@ -13,7 +13,6 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.RatingBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import ch.hslu.mobpro.proj.thinkquick.game.Gesture;
 import ch.hslu.mobpro.proj.thinkquick.game.RPSGame;
@@ -159,7 +158,6 @@ public class GameActivity extends AppCompatActivity {
     private void checkUserNeedTutorial() {
         if (sharedPreferences.getBoolean("firstrun", true)) {
             runTutorial();
-            sharedPreferences.edit().putBoolean("firstrun", false).commit();
         } else {
             startGame();
             playExercise();
@@ -190,6 +188,7 @@ public class GameActivity extends AppCompatActivity {
                         if (tutorialFactory.hasTutorials()) {
                             displayTutorial(tutorialFactory.getNext());
                         } else {
+                            sharedPreferences.edit().putBoolean("firstrun", false).commit();
                             startCountDownBeforeGame();
                         }
                     }
@@ -207,8 +206,10 @@ public class GameActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        rpsGame.pause();
-        isProgressPaused(true);
+        if (rpsGame != null) {
+            rpsGame.pause();
+            isProgressPaused(true);
+        }
     }
 
     @Override
@@ -222,17 +223,13 @@ public class GameActivity extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
-        rpsGame.stop();
+        if (rpsGame != null) {
+            rpsGame.stop();
+        }
     }
 
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-
-        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            Toast.makeText(this, "landscape", Toast.LENGTH_SHORT).show();
-        } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT){
-            Toast.makeText(this, "portrait", Toast.LENGTH_SHORT).show();
-        }
     }
 }

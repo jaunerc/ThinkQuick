@@ -28,6 +28,7 @@ public class RPSGame {
     private final static int MIN_PROGRESS = 0;
     private final static int START_POINTS = 0;
     private final static int START_LIFE = 3;
+    private boolean hasStarted = false;
     private int progressPausedAt;
     private AsyncTask<Integer, Integer, String> progressTime;
     private PlayerStats playerStats;
@@ -37,10 +38,15 @@ public class RPSGame {
     private ProgressBar progressBar;
 
     public void start(Context gameView) {
+        hasStarted = true;
         this.gameView = gameView;
         playerStats = new PlayerStats(gameView, START_POINTS, START_LIFE);
         progressBar = (ProgressBar) ((Activity) gameView).findViewById(R.id.timeView);
         initExerciseFactory();
+    }
+
+    public boolean isHasStarted() {
+        return hasStarted;
     }
 
     private void initExerciseFactory() {

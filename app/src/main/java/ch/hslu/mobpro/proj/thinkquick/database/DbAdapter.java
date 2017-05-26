@@ -93,14 +93,14 @@ public class DbAdapter {
     }
 
     /**
-     * Initializes a db cursor to read all results.
+     * Initializes a db cursor to read all results ordered by Points.
      *
      * @param tableName The table with results.
      * @return Database sursor.
      * @throws IOException If the results could not be read.
      */
     private Cursor initAllResultCursor(final String tableName) throws IOException {
-        final Cursor cursor = db.rawQuery("SELECT * FROM " + tableName, null);
+        final Cursor cursor = db.rawQuery("SELECT * FROM " + tableName + " ORDER BY Points", null);
         if (!cursor.moveToFirst()) {
             throw new IOException("Could not read from table " + tableName);
         }

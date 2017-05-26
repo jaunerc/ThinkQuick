@@ -100,7 +100,7 @@ public class DbAdapter {
      * @throws IOException If the results could not be read.
      */
     private Cursor initAllResultCursor(final String tableName) throws IOException {
-        final Cursor cursor = db.rawQuery("SELECT * FROM " + tableName + " ORDER BY points DESC", null);
+        final Cursor cursor = db.rawQuery("SELECT * FROM " + tableName + " ORDER BY CAST(points AS INTEGER) DESC", null);
         if (!cursor.moveToFirst()) {
             throw new IOException("Could not read from table " + tableName);
         }

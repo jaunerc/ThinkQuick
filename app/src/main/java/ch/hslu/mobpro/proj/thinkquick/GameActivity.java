@@ -2,7 +2,6 @@ package ch.hslu.mobpro.proj.thinkquick;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.Configuration;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
@@ -11,6 +10,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
@@ -30,6 +30,7 @@ public class GameActivity extends AppCompatActivity {
     private GameSituation currentGameSituation;
     private Quest currentQuest;
     private RPSGame rpsGame;
+    private String KEY_COUNTER = "OnSaveInstance";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -229,7 +230,16 @@ public class GameActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
+    protected void onSaveInstanceState(Bundle outState) {
+        ProgressBar progressBar = (ProgressBar) findViewById(R.id.timeView);
+        outState.putInt(KEY_COUNTER, progressBar.getProgress());
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        int currentProgress = savedInstanceState.getInt(KEY_COUNTER);
+        rpsGame.orientationChanged(currentProgress);
+        super.onRestoreInstanceState(savedInstanceState);
     }
 }

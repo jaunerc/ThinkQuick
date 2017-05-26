@@ -17,12 +17,11 @@
             </intent-filter>
         </activity>
         <activity android:name=".MainActivity" />
-        <activity android:name=".GameActivity"
-                  android:configChanges="orientation|screenSize"/>
+        <activity android:name=".GameActivity" />
         <activity android:name=".HighscoreActivity" />
         <activity android:name=".PointsDistributionActivity" />
         <activity android:name=".CountdownActivity" />
-        <activity android:name=".GameOverActivity"></activity>
+        <activity android:name=".GameOverActivity" />
 
         <meta-data
             android:name="android.support.PARENT_ACTIVITY"

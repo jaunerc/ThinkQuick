@@ -153,4 +153,9 @@ public class RPSGame {
     private ProgressBar getGameViewProgressBar() {
         return (ProgressBar) ((Activity) gameView).findViewById(R.id.timeView);
     }
+
+    public void orientationChanged(int currentProgress) {
+        stopProgressBarTask();
+        startProgressCountDown(currentProgress);
+    }
 }

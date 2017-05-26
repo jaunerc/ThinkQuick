@@ -230,6 +230,11 @@ public class GameActivity extends AppCompatActivity {
     }
 
     @Override
+    public void onBackPressed() {
+        startActivity(new Intent(this, MainActivity.class));
+    }
+
+    @Override
     protected void onSaveInstanceState(Bundle outState) {
         ProgressBar progressBar = (ProgressBar) findViewById(R.id.timeView);
         outState.putInt(KEY_COUNTER, progressBar.getProgress());

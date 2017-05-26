@@ -3,6 +3,7 @@ package ch.hslu.mobpro.proj.thinkquick.game;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.widget.ProgressBar;
 
@@ -19,6 +20,8 @@ import ch.hslu.mobpro.proj.thinkquick.game.exercises.GameSituation;
 import ch.hslu.mobpro.proj.thinkquick.game.exercises.Quest;
 import ch.hslu.mobpro.proj.thinkquick.game.exercises.QuestBacklog;
 
+import static android.content.Context.MODE_PRIVATE;
+
 /**
  * Created by Alan Meile on 15.05.2017.
  */
@@ -28,9 +31,9 @@ public class RPSGame {
     private final static int MIN_PROGRESS = 0;
     private final static int START_POINTS = 0;
     private final static int START_LIFE = 3;
-    private boolean hasStarted = false;
     private int progressPausedAt;
     private AsyncTask<Integer, Integer, String> progressTime;
+    private SharedPreferences sharedPreferences;
     private PlayerStats playerStats;
     private ExerciseFactory exerciseFactory;
     private Exercise currentExercise;
@@ -38,15 +41,16 @@ public class RPSGame {
     private ProgressBar progressBar;
 
     public void start(Context gameView) {
-        hasStarted = true;
         this.gameView = gameView;
         playerStats = new PlayerStats(gameView, START_POINTS, START_LIFE);
         progressBar = (ProgressBar) ((Activity) gameView).findViewById(R.id.timeView);
+        setupSharedPreferences();
         initExerciseFactory();
     }
 
-    public boolean isHasStarted() {
-        return hasStarted;
+    private void setupSharedPreferences() {
+        String packageName = gameView.getPackageName();
+        sharedPreferences = gameView.getSharedPreferences(packageName, MODE_PRIVATE);
     }
 
     private void initExerciseFactory() {
@@ -65,13 +69,17 @@ public class RPSGame {
     }
 
     private void startProgressCountDown() {
-        progressBar.setMax(MAX_PROGRESS);
-        progressTime = new ProgressTime(progressBar, this).execute(MAX_PROGRESS, MIN_PROGRESS);
+        if (!sharedPreferences.getBoolean("GodMode", false)) {
+            progressBar.setMax(MAX_PROGRESS);
+            progressTime = new ProgressTime(progressBar, this).execute(MAX_PROGRESS, MIN_PROGRESS);
+        }
     }
 
     private void startProgressCountDown(int currentProgress) {
-        progressBar.setMax(MAX_PROGRESS);
-        progressTime = new ProgressTime(progressBar, this).execute(currentProgress, MIN_PROGRESS);
+        if (!sharedPreferences.getBoolean("GodMode", false)) {
+            progressBar.setMax(MAX_PROGRESS);
+            progressTime = new ProgressTime(progressBar, this).execute(currentProgress, MIN_PROGRESS);
+        }
     }
 
     public void gameOver() {
@@ -111,7 +119,9 @@ public class RPSGame {
     }
 
     private void stopProgressBarTask() {
-        progressTime.cancel(true);
+        if (!sharedPreferences.getBoolean("GodMode", false)) {
+            progressTime.cancel(true);
+        }
     }
 
     public void deductPlayerLife() {

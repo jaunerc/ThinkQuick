@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class CountdownActivity extends AppCompatActivity {
     private final static int COUNTDOWNINMILLIS = 4000;
@@ -55,5 +54,10 @@ public class CountdownActivity extends AppCompatActivity {
     protected void onStop() {
         super.onStop();
         countDownTimer.cancel();
+    }
+
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(this, MainActivity.class));
     }
 }

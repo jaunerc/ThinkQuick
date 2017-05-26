@@ -145,7 +145,7 @@
         android:text="@string/string_beatTheWinner"
         android:textAlignment="center"
         android:textColor="@color/green"
-        android:textSize="30sp"
+        android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"

@@ -167,9 +167,22 @@ public class GameActivity extends AppCompatActivity {
 
     private void runTutorial() {
         tutorialFactory = new TutorialFactory();
+        disableUserControls();
 
         tutorialFactory.initModul();
         displayTutorial(tutorialFactory.getNext());
+    }
+
+    private void disableUserControls() {
+        ImageButton rock = (ImageButton) findViewById(R.id.rock);
+        ImageButton paper = (ImageButton) findViewById(R.id.paper);
+        ImageButton scissor = (ImageButton) findViewById(R.id.scissor);
+        Button skip = (Button) findViewById(R.id.skip);
+
+        rock.setOnClickListener(null);
+        paper.setOnClickListener(null);
+        scissor.setOnClickListener(null);
+        skip.setOnClickListener(null);
     }
 
     private void displayTutorial(Tutorial topic) {

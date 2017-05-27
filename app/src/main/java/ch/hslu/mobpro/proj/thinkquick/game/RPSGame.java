@@ -27,7 +27,7 @@ import static android.content.Context.MODE_PRIVATE;
  */
 
 public class RPSGame {
-    private final static int MAX_PROGRESS = 80;
+    private final static int MAX_PROGRESS = 100;
     private final static int MIN_PROGRESS = 0;
     private final static int START_POINTS = 0;
     private final static int START_LIFE = 3;

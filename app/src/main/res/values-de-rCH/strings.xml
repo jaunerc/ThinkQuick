@@ -9,7 +9,7 @@
     <string name="lifeView_title">Leben</string>
     <string name="lifeView_description">Diese Lebenspunkte sollten nicht unter Null gehen.</string>
     <string name="labelVs_title">Situation</string>
-    <string name="labelVs_description">Zeitgt eine Spielsituation.</string>
+    <string name="labelVs_description">Zeigt eine Spielsituation.</string>
     <string name="challenge_title">Aufgabe</string>
     <string name="challenge_description">Probiere diese Aufgabe zu lösen.</string>
     <string name="skip_title">Überspringen</string>

@@ -19,6 +19,12 @@
     <string name="points_title">Points</string>
     <string name="points_description">Shows your current score</string>
     <string name="gameover_points_description">Points:</string>
+    <string name="menu_btn_play">PLAY</string>
+    <string name="menu_btn_highscore">HIGHSCORE</string>
+    <string name="menu_btn_settings">SETTINGS</string>
+    <string name="distribution_check_tutorial">Show tutorial on next game</string>
+    <string name="distribution_clear_highscore">Clear highscore</string>
+    <string name="distribution_btn_back">BACK TO MENU</string>
     <string name="result_correct">Correct</string>
     <string name="result_wrong">Wrong</string>
     <string name="countdown_go">Go!</string>

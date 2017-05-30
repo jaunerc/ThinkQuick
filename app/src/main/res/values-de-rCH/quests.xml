@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="easyWin">Gewinne!</string>
+    <string name="easyLoose">Verliere!</string>
+    <string name="easyDraw">Mach ein Unentschieden!</string>
+    <string name="hardWinWin">Gewinne gegen den Gewinner!</string>
+    <string name="hardWinLoose">Gewinne gegen den Verlierer!</string>
+    <string name="hardLooseWin">Verliere gegen den Gewinner!</string>
+    <string name="hardLooseLoose">Verliere gegen den Verlierer!</string>
+    <string name="hardDrawWin">Mach ein Unentschieden mit dem Gewinner!</string>
+    <string name="hardDrawLoose">Mach ein Unentschieden mit dem Verlierer!</string>
+</resources>

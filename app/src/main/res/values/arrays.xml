@@ -1,16 +1,3 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string-array name="easyQuestInfos">
-        <item>Win!</item>
-        <item>Lose!</item>
-        <item>Make a draw!</item>
-    </string-array>
-    <string-array name="hardQuestInfos">
-        <item>Win against the winner!</item>
-        <item>Win against the looser!</item>
-        <item>Lose against the winner!</item>
-        <item>Lose against the looser!</item>
-        <item>Make a draw with the winner!</item>
-        <item>Make a draw with the looser!</item>
-    </string-array>
 </resources>

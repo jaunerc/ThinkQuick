@@ -1,0 +1,28 @@
+<resources>
+    <string name="app_name">ThinkQuick</string>
+    <string name="design_credits"><a href='https://www.vecteezy.com' target='_blank'>Design Credits: Vecteezy!</a></string>
+    <string name="value_vs">VS</string>
+    <string name="string_beatTheWinner">SCHLAGE DEN GEWINNER</string>
+    <string name="value_skip">SKIP</string>
+    <string name="timeView_title">Zeit</string>
+    <string name="timeView_description">Sobald die Zeit aufgebraucht ist, wird ein Leben abgezogen.</string>
+    <string name="lifeView_title">Leben</string>
+    <string name="lifeView_description">Diese Lebenspunkte sollten nicht unter Null gehen.</string>
+    <string name="labelVs_title">Situation</string>
+    <string name="labelVs_description">Zeigt eine Spielsituation.</string>
+    <string name="challenge_title">Aufgabe</string>
+    <string name="challenge_description">Probiere diese Aufgabe zu lösen.</string>
+    <string name="skip_title">Überspringen</string>
+    <string name="skip_description">Eine Aufgabe kann übersprungen werden. Das ist aber nicht gratis ;-)</string>
+    <string name="scissor_title">Antwort</string>
+    <string name="scissor_description">Papier schlägt Stein, die Antwort ist Schere</string>
+    <string name="points_title">Punkte</string>
+    <string name="points_description">Deine aktuellen Punkte</string>
+    <string name="gameover_points_description">Punkte:</string>
+    <string name="menu_btn_play">SPIELEN</string>
+    <string name="menu_btn_highscore">HIGHSCORE</string>
+    <string name="menu_btn_settings">EINSTELLUNGEN</string>
+    <string name="distribution_check_tutorial">Zeig das Tutorial beim nächsten Spiel</string>
+    <string name="distribution_clear_highscore">Highscore löschen</string>
+    <string name="distribution_btn_back">ZUM MENU</string>
+</resources>

@@ -14,7 +14,7 @@ import java.util.List;
 
 import ch.hslu.mobpro.proj.thinkquick.database.DbAdapter;
 import ch.hslu.mobpro.proj.thinkquick.database.DbResultsEntry;
-import ch.hslu.mobpro.proj.thinkquick.game.PlayerStats;
+import ch.hslu.mobpro.proj.thinkquick.game.helper.PlayerStats;
 
 public class GameOverActivity extends AppCompatActivity {
 

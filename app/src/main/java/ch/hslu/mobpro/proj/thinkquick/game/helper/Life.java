@@ -1,4 +1,4 @@
-package ch.hslu.mobpro.proj.thinkquick.game;
+package ch.hslu.mobpro.proj.thinkquick.game.helper;
 
 /**
  * Created by alkazua on 05.05.2017.

@@ -3,7 +3,9 @@ package ch.hslu.mobpro.proj.thinkquick.game;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import ch.hslu.mobpro.proj.thinkquick.game.helper.Life;
+
+import static org.junit.Assert.assertEquals;
 
 /**
  * Created by alkazua on 05.05.2017.

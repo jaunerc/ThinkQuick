@@ -2,7 +2,7 @@ package ch.hslu.mobpro.proj.thinkquick.game.exercises;
 
 import java.util.Random;
 
-import ch.hslu.mobpro.proj.thinkquick.game.Gesture;
+import ch.hslu.mobpro.proj.thinkquick.game.helper.Gesture;
 
 /**
  * This class represents a factory that provides methods to create exercises.

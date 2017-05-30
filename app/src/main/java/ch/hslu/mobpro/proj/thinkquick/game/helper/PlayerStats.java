@@ -1,4 +1,4 @@
-package ch.hslu.mobpro.proj.thinkquick.game;
+package ch.hslu.mobpro.proj.thinkquick.game.helper;
 
 import android.content.Context;
 import android.content.SharedPreferences;

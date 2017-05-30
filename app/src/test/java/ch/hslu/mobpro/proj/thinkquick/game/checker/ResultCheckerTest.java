@@ -3,9 +3,9 @@ package ch.hslu.mobpro.proj.thinkquick.game.checker;
 import org.junit.Before;
 import org.junit.Test;
 
-import ch.hslu.mobpro.proj.thinkquick.game.Gesture;
 import ch.hslu.mobpro.proj.thinkquick.game.exercises.Quest;
 import ch.hslu.mobpro.proj.thinkquick.game.exercises.QuestTarget;
+import ch.hslu.mobpro.proj.thinkquick.game.helper.Gesture;
 
 import static org.junit.Assert.assertEquals;
 

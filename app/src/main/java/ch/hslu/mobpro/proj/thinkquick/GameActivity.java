@@ -14,11 +14,11 @@ import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
-import ch.hslu.mobpro.proj.thinkquick.game.Gesture;
 import ch.hslu.mobpro.proj.thinkquick.game.RPSGame;
 import ch.hslu.mobpro.proj.thinkquick.game.checker.ExerciseResult;
 import ch.hslu.mobpro.proj.thinkquick.game.exercises.GameSituation;
 import ch.hslu.mobpro.proj.thinkquick.game.exercises.Quest;
+import ch.hslu.mobpro.proj.thinkquick.game.helper.Gesture;
 import ch.hslu.mobpro.proj.thinkquick.game.tutorial.Tutorial;
 import ch.hslu.mobpro.proj.thinkquick.game.tutorial.TutorialFactory;
 import uk.co.samuelwall.materialtaptargetprompt.MaterialTapTargetPrompt;
@@ -31,6 +31,8 @@ public class GameActivity extends AppCompatActivity {
     private Quest currentQuest;
     private RPSGame rpsGame;
     private String KEY_COUNTER = "OnSaveInstance";
+    private ImageButton rock, paper, scissor;
+    private Button skip;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,10 +52,10 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void initializeUserControls() {
-        ImageButton rock = (ImageButton) findViewById(R.id.rock);
-        ImageButton paper = (ImageButton) findViewById(R.id.paper);
-        ImageButton scissor = (ImageButton) findViewById(R.id.scissor);
-        Button skip = (Button) findViewById(R.id.skip);
+        rock = (ImageButton) findViewById(R.id.rock);
+        paper = (ImageButton) findViewById(R.id.paper);
+        scissor = (ImageButton) findViewById(R.id.scissor);
+        skip = (Button) findViewById(R.id.skip);
 
         setOnClickListener(rock, paper, scissor, skip);
     }
@@ -92,10 +94,16 @@ public class GameActivity extends AppCompatActivity {
     private void playerAnswerWith(Gesture answer) {
         ExerciseResult playerResult = rpsGame.solveWith(answer);
         if (playerResult.isCorrect()) {
+            rememberResult(true);
             rpsGame.awardPlayerPoints(playerResult.getPoints());
         } else {
+            rememberResult(false);
             rpsGame.deductPlayerLife();
         }
+    }
+
+    private void rememberResult(boolean result) {
+        sharedPreferences.edit().putBoolean("ExerciseCorrect", result).commit();
     }
 
     private void startCountDownBeforeGame() {
@@ -158,11 +166,19 @@ public class GameActivity extends AppCompatActivity {
 
     private void checkUserNeedTutorial() {
         if (sharedPreferences.getBoolean("firstrun", true)) {
+            enableUi(false);
             runTutorial();
         } else {
             startGame();
             playExercise();
         }
+    }
+
+    private void enableUi(boolean state) {
+        rock.setEnabled(state);
+        paper.setEnabled(state);
+        scissor.setEnabled(state);
+        skip.setEnabled(state);
     }
 
     private void runTutorial() {
@@ -231,7 +247,7 @@ public class GameActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        startActivity(new Intent(this, MainActivity.class));
+        rpsGame.gameOver();
     }
 
     @Override

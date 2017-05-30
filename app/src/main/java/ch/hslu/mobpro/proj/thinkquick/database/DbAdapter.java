@@ -18,7 +18,6 @@ import ch.hslu.mobpro.proj.thinkquick.game.checker.ExerciseResult;
  */
 
 public class DbAdapter {
-
     public final static String DB_NAME = "thinkDb";
     public final static int DB_VERSION = 1;
     public final static String DB_RESULT_TABLE = "tbl_results";
@@ -54,24 +53,28 @@ public class DbAdapter {
      * @throws IOException If the result could not be inserted.
      */
     public void insert(final ExerciseResult result) throws IOException {
-        final ContentValues values = new ContentValues();
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd");
-        values.put("date", simpleDateFormat.format(new Date()));
-        values.put("points", result.getPoints());
-        final long id = db.insert(DB_RESULT_TABLE, null, values);
-        if (id == SQLITE_ERROR_CODE) {
-            throw new IOException("The result could not be inserted.");
+        if (result.getPoints() > 0) {
+            final ContentValues values = new ContentValues();
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd");
+            values.put("date", simpleDateFormat.format(new Date()));
+            values.put("points", result.getPoints());
+            final long id = db.insert(DB_RESULT_TABLE, null, values);
+            if (id == SQLITE_ERROR_CODE) {
+                throw new IOException("The result could not be inserted.");
+            }
         }
     }
 
     public void insert(final int points, final Date date) throws IOException {
-        final ContentValues values = new ContentValues();
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd");
-        values.put("date", simpleDateFormat.format(date));
-        values.put("points", points);
-        final long id = db.insert(DB_RESULT_TABLE, null, values);
-        if (id == SQLITE_ERROR_CODE) {
-            throw new IOException("The result could not be inserted.");
+        if (points > 0) {
+            final ContentValues values = new ContentValues();
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd");
+            values.put("date", simpleDateFormat.format(date));
+            values.put("points", points);
+            final long id = db.insert(DB_RESULT_TABLE, null, values);
+            if (id == SQLITE_ERROR_CODE) {
+                throw new IOException("The result could not be inserted.");
+            }
         }
     }
 

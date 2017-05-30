@@ -129,4 +129,9 @@ public class MainActivity extends AppCompatActivity {
         sharedPreferences.edit().putInt("PlayerPoints", 0).commit();
         sharedPreferences.edit().putInt("PlayerLife", 3).commit();
     }
+
+    @Override
+    public void onBackPressed() {
+        // do nothing
+    }
 }

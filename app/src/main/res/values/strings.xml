@@ -19,4 +19,7 @@
     <string name="points_title">Points</string>
     <string name="points_description">Shows your current score</string>
     <string name="gameover_points_description">Points:</string>
+    <string name="result_correct">Correct</string>
+    <string name="result_wrong">Wrong</string>
+    <string name="countdown_go">Go!</string>
 </resources>

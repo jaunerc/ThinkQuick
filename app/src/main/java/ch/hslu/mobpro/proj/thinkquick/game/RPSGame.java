@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.AsyncTask;
 import android.widget.ProgressBar;
 
 import java.util.Random;
@@ -19,6 +18,9 @@ import ch.hslu.mobpro.proj.thinkquick.game.exercises.ExerciseFactory;
 import ch.hslu.mobpro.proj.thinkquick.game.exercises.GameSituation;
 import ch.hslu.mobpro.proj.thinkquick.game.exercises.Quest;
 import ch.hslu.mobpro.proj.thinkquick.game.exercises.QuestBacklog;
+import ch.hslu.mobpro.proj.thinkquick.game.helper.Gesture;
+import ch.hslu.mobpro.proj.thinkquick.game.helper.PlayerStats;
+import ch.hslu.mobpro.proj.thinkquick.game.helper.ProgressTime;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -32,7 +34,7 @@ public class RPSGame {
     private final static int START_POINTS = 0;
     private final static int START_LIFE = 3;
     private int progressPausedAt;
-    private AsyncTask<Integer, Integer, String> progressTime;
+    private ProgressTime progressTime;
     private SharedPreferences sharedPreferences;
     private PlayerStats playerStats;
     private ExerciseFactory exerciseFactory;
@@ -71,14 +73,16 @@ public class RPSGame {
     private void startProgressCountDown() {
         if (!sharedPreferences.getBoolean("GodMode", false)) {
             progressBar.setMax(MAX_PROGRESS);
-            progressTime = new ProgressTime(progressBar, this).execute(MAX_PROGRESS, MIN_PROGRESS);
+            progressTime = new ProgressTime(progressBar, this);
+            progressTime.execute(MAX_PROGRESS);
         }
     }
 
     private void startProgressCountDown(int currentProgress) {
         if (!sharedPreferences.getBoolean("GodMode", false)) {
             progressBar.setMax(MAX_PROGRESS);
-            progressTime = new ProgressTime(progressBar, this).execute(currentProgress, MIN_PROGRESS);
+            progressTime = new ProgressTime(progressBar, this);
+            progressTime.execute(currentProgress);
         }
     }
 
@@ -120,7 +124,7 @@ public class RPSGame {
 
     private void stopProgressBarTask() {
         if (!sharedPreferences.getBoolean("GodMode", false)) {
-            progressTime.cancel(true);
+            progressTime.cancel();
         }
     }
 

@@ -1,6 +1,6 @@
 package ch.hslu.mobpro.proj.thinkquick.game.exercises;
 
-import ch.hslu.mobpro.proj.thinkquick.game.Gesture;
+import ch.hslu.mobpro.proj.thinkquick.game.helper.Gesture;
 
 /**
  * This class represents a quest.

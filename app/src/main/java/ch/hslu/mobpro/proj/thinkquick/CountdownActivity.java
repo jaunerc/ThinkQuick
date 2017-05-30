@@ -1,59 +1,96 @@
 package ch.hslu.mobpro.proj.thinkquick;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.CountDownTimer;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 
 public class CountdownActivity extends AppCompatActivity {
-    private final static int COUNTDOWNINMILLIS = 4000;
-    private final static int INTERVALINMILLIS = 1000;
+    private final static int DELAY = 1000;
+    private int count = 3;
     private TextView countdownView;
-    private CountDownTimer countDownTimer;
+    private SharedPreferences sharedPreferences;
+    private Runnable performAfterExecution;
+    private Handler countDown;
+    private Intent gameActivity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_countdown);
 
+        countdownView = (TextView) findViewById(R.id.countdownView);
+        gameActivity = new Intent(this, GameActivity.class);
+
+        initAfterCountDownExecution();
+        setupSharedPreferences();
+        setExerciseResult();
         startCountDown();
     }
 
+    private void initAfterCountDownExecution() {
+        countdownView.setText(Integer.toString(count));
+        performAfterExecution = new Runnable() {
+            public void run() {
+                count--;
+                if (count > 0) {
+                    countdownView.setText(Integer.toString(count));
+                } else {
+                    countdownView.setText(R.string.countdown_go);
+                }
+                countDownOneStep();
+            }
+        };
+    }
+
+    private void setupSharedPreferences() {
+        String packageName = getApplicationContext().getPackageName();
+        sharedPreferences = getSharedPreferences(packageName, MODE_PRIVATE);
+    }
+
+    private void setExerciseResult() {
+        TextView exerciseResult = (TextView) findViewById(R.id.countdownResult);
+        if (sharedPreferences.getBoolean("ExerciseCorrect", false)) {
+            exerciseResult.setText(R.string.result_correct);
+        } else {
+            exerciseResult.setText(R.string.result_wrong);
+        }
+
+    }
+
     private void startCountDown() {
-        countdownView = (TextView) findViewById(R.id.countdownView);
-        final Intent gameActivity = new Intent(this, GameActivity.class);
+        countDown = new Handler();
+        countDownOneStep();
+    }
 
-        countDownTimer = new CountDownTimer(COUNTDOWNINMILLIS, INTERVALINMILLIS) {
-            @Override
-            public void onTick(long millisUntilFinished) {
-                int count = (int) (millisUntilFinished / INTERVALINMILLIS);
-                countdownView.setText(Integer.toString(count));
+    private void countDownOneStep() {
+        countDown.postDelayed(new Runnable() {
+            public void run() {
+                if (count > 0) {
+                    countDown.postDelayed(performAfterExecution, 0);
+                } else {
+                    startActivity(gameActivity);
+                }
             }
+        }, DELAY);
+    }
 
-            @Override
-            public void onFinish() {
-                startActivity(gameActivity);
-            }
-        }.start();
+    private void cancelCountDown() {
+        countDown.removeCallbacksAndMessages(null);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        countDownTimer.cancel();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        countDownTimer.start();
+        cancelCountDown();
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        countDownTimer.cancel();
+        cancelCountDown();
     }
 
     @Override

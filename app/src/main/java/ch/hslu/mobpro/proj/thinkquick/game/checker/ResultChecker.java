@@ -1,7 +1,7 @@
 package ch.hslu.mobpro.proj.thinkquick.game.checker;
 
-import ch.hslu.mobpro.proj.thinkquick.game.Gesture;
 import ch.hslu.mobpro.proj.thinkquick.game.exercises.Quest;
+import ch.hslu.mobpro.proj.thinkquick.game.helper.Gesture;
 
 /**
  * Created by Alan Meile on 11.05.2017.

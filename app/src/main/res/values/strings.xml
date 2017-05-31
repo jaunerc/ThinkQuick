@@ -28,4 +28,6 @@
     <string name="result_correct">Correct</string>
     <string name="result_wrong">Wrong</string>
     <string name="countdown_go">Go!</string>
+    <string name="point_distribution">Point distribution</string>
+    <string name="settings">Settings</string>
 </resources>

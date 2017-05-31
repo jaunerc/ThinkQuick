@@ -28,4 +28,6 @@
     <string name="result_correct">Richtig</string>
     <string name="result_wrong">Falsch</string>
     <string name="countdown_go">Los!</string>
+    <string name="point_distribution">Punkteverteilung</string>
+    <string name="settings">Einstellungen</string>
 </resources>

@@ -52,6 +52,17 @@ public class CountdownActivity extends AppCompatActivity {
 
     private void setExerciseResult() {
         TextView exerciseResult = (TextView) findViewById(R.id.countdownResult);
+        TextView countDownPoints = (TextView) findViewById(R.id.countDownPoints);
+
+        int points = sharedPreferences.getInt("ExercisePoints", 0);
+
+        if (points >= 0) {
+            countDownPoints.setText("+ " + Integer.toString(points));
+        } else {
+            countDownPoints.setText("- " + Integer.toString(-1 * points));
+        }
+
+
         if (sharedPreferences.getBoolean("ExerciseCorrect", false)) {
             exerciseResult.setText(R.string.result_correct);
         } else {

@@ -10,7 +10,8 @@ import ch.hslu.mobpro.proj.thinkquick.game.RPSGame;
  */
 
 public class ProgressTime {
-    private final static int DELAY = 60;
+    private final static int COUNTDOWN_DELAY = 2000;
+    private final static int TICK_DELAY = 20;
     private Handler countDown;
     private RPSGame rpsGame;
     private ProgressBar progressBar;
@@ -33,11 +34,20 @@ public class ProgressTime {
         };
     }
 
-    public String execute(int maxProgress) {
+    public void execute(final int maxProgress) {
+        initAfterCountDownExecution();
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                startCountDown(maxProgress);
+            }
+        }, COUNTDOWN_DELAY);
+    }
+
+    public void execute(final int maxProgress, final boolean delayed) {
         initAfterCountDownExecution();
         startCountDown(maxProgress);
-
-        return null;
     }
 
     private void startCountDown(final int maxProgress) {
@@ -52,7 +62,7 @@ public class ProgressTime {
                     rpsGame.timeUp();
                 }
             }
-        }, DELAY);
+        }, TICK_DELAY);
     }
 
     private void publishProgress() {

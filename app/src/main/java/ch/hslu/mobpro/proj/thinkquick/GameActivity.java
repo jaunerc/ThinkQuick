@@ -18,12 +18,15 @@ import ch.hslu.mobpro.proj.thinkquick.game.RPSGame;
 import ch.hslu.mobpro.proj.thinkquick.game.checker.ExerciseResult;
 import ch.hslu.mobpro.proj.thinkquick.game.exercises.GameSituation;
 import ch.hslu.mobpro.proj.thinkquick.game.exercises.Quest;
+import ch.hslu.mobpro.proj.thinkquick.game.helper.GameAnimator;
 import ch.hslu.mobpro.proj.thinkquick.game.helper.Gesture;
 import ch.hslu.mobpro.proj.thinkquick.game.tutorial.Tutorial;
 import ch.hslu.mobpro.proj.thinkquick.game.tutorial.TutorialFactory;
 import uk.co.samuelwall.materialtaptargetprompt.MaterialTapTargetPrompt;
 
 public class GameActivity extends AppCompatActivity {
+    private final static int ANIMATION_DELAY_FIRST = 500;
+    private final static int ANIMATION_DELAY_SECOND = 2000;
     private Intent countdownActivity;
     private SharedPreferences sharedPreferences;
     private TutorialFactory tutorialFactory;
@@ -52,11 +55,17 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void initializeUserControls() {
+        TextView labelQuest = (TextView) findViewById(R.id.challenge);
         rock = (ImageButton) findViewById(R.id.rock);
         paper = (ImageButton) findViewById(R.id.paper);
         scissor = (ImageButton) findViewById(R.id.scissor);
         skip = (Button) findViewById(R.id.skip);
 
+        GameAnimator.fadeInElements(labelQuest, ANIMATION_DELAY_FIRST);
+        GameAnimator.fadeInElements(rock, ANIMATION_DELAY_SECOND);
+        GameAnimator.fadeInElements(paper, ANIMATION_DELAY_SECOND);
+        GameAnimator.fadeInElements(scissor, ANIMATION_DELAY_SECOND);
+        GameAnimator.fadeInElements(skip, ANIMATION_DELAY_SECOND);
         setOnClickListener(rock, paper, scissor, skip);
     }
 
@@ -86,6 +95,8 @@ public class GameActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
+                sharedPreferences.edit().putInt("ExercisePoints", -100).commit();
+                sharedPreferences.edit().putBoolean("ExerciseCorrect", false).commit();
                 rpsGame.skip();
             }
         });
@@ -94,15 +105,16 @@ public class GameActivity extends AppCompatActivity {
     private void playerAnswerWith(Gesture answer) {
         ExerciseResult playerResult = rpsGame.solveWith(answer);
         if (playerResult.isCorrect()) {
-            rememberResult(true);
+            rememberResult(true, playerResult.getPoints());
             rpsGame.awardPlayerPoints(playerResult.getPoints());
         } else {
-            rememberResult(false);
+            rememberResult(false, 0);
             rpsGame.deductPlayerLife();
         }
     }
 
-    private void rememberResult(boolean result) {
+    private void rememberResult(boolean result, int points) {
+        sharedPreferences.edit().putInt("ExercisePoints", points).commit();
         sharedPreferences.edit().putBoolean("ExerciseCorrect", result).commit();
     }
 

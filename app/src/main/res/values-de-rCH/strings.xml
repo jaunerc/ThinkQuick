@@ -25,4 +25,7 @@
     <string name="distribution_check_tutorial">Zeig das Tutorial beim nächsten Spiel</string>
     <string name="distribution_clear_highscore">Highscore löschen</string>
     <string name="distribution_btn_back">ZUM MENU</string>
+    <string name="result_correct">Richtig</string>
+    <string name="result_wrong">Falsch</string>
+    <string name="countdown_go">Los!</string>
 </resources>

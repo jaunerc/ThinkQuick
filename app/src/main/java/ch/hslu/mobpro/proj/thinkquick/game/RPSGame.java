@@ -82,7 +82,7 @@ public class RPSGame {
         if (!sharedPreferences.getBoolean("GodMode", false)) {
             progressBar.setMax(MAX_PROGRESS);
             progressTime = new ProgressTime(progressBar, this);
-            progressTime.execute(currentProgress);
+            progressTime.execute(currentProgress, false);
         }
     }
 
@@ -131,6 +131,8 @@ public class RPSGame {
     public void deductPlayerLife() {
         if (playerStats.getLife() > 0) {
             playerStats.deductLife();
+            sharedPreferences.edit().putInt("ExercisePoints", 0).commit();
+            sharedPreferences.edit().putBoolean("ExerciseCorrect", false).commit();
             showCountDownActivity();
         } else {
             gameOver();

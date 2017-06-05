@@ -30,4 +30,7 @@
     <string name="countdown_go">Los!</string>
     <string name="point_distribution">Punkteverteilung</string>
     <string name="settings">Einstellungen</string>
+    <string name="game_mode_btn_endless">Endlos</string>
+    <string name="game_mode_btn_hardcore">Hardcore</string>
+    <string name="game_mode_btn_surprise">Surprise</string>
 </resources>

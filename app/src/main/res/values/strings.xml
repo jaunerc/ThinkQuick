@@ -30,4 +30,7 @@
     <string name="countdown_go">Go!</string>
     <string name="point_distribution">Point distribution</string>
     <string name="settings">Settings</string>
+    <string name="game_mode_btn_endless">Endless</string>
+    <string name="game_mode_btn_hardcore">Hardcore</string>
+    <string name="game_mode_btn_surprise">Überraschung</string>
 </resources>

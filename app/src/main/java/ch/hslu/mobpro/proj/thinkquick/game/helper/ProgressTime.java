@@ -70,6 +70,8 @@ public class ProgressTime {
     }
 
     public void cancel() {
-        countDown.removeCallbacksAndMessages(null);
+        if (countDown != null) {
+            countDown.removeCallbacksAndMessages(null);
+        }
     }
 }

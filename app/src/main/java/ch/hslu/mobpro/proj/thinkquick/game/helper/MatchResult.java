@@ -1,5 +1,7 @@
 package ch.hslu.mobpro.proj.thinkquick.game.helper;
 
+import ch.hslu.mobpro.proj.thinkquick.game.enumerations.Gesture;
+
 /**
  * Created by Alan Meile on 12.05.2017.
  */

@@ -1,7 +1,7 @@
-package ch.hslu.mobpro.proj.thinkquick;
+package ch.hslu.mobpro.proj.thinkquick.activities;
 
+import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
@@ -14,23 +14,27 @@ import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import ch.hslu.mobpro.proj.thinkquick.R;
 import ch.hslu.mobpro.proj.thinkquick.game.RPSGame;
 import ch.hslu.mobpro.proj.thinkquick.game.checker.ExerciseResult;
+import ch.hslu.mobpro.proj.thinkquick.game.enumerations.Gesture;
+import ch.hslu.mobpro.proj.thinkquick.game.enumerations.UserAnswer;
 import ch.hslu.mobpro.proj.thinkquick.game.exercises.GameSituation;
 import ch.hslu.mobpro.proj.thinkquick.game.exercises.Quest;
 import ch.hslu.mobpro.proj.thinkquick.game.helper.GameAnimator;
-import ch.hslu.mobpro.proj.thinkquick.game.helper.Gesture;
 import ch.hslu.mobpro.proj.thinkquick.game.tutorial.Tutorial;
 import ch.hslu.mobpro.proj.thinkquick.game.tutorial.TutorialFactory;
+import ch.hslu.mobpro.proj.thinkquick.preferences.PreferenceSingleton;
 import uk.co.samuelwall.materialtaptargetprompt.MaterialTapTargetPrompt;
 
 public class GameActivity extends AppCompatActivity {
+    private final static int SKIP_POINTS = -100;
     private final static int ANIMATION_DELAY_FIRST = 500;
     private final static int ANIMATION_DELAY_SECOND = 2000;
     private Intent countdownActivity;
-    private SharedPreferences sharedPreferences;
     private TutorialFactory tutorialFactory;
     private GameSituation currentGameSituation;
+    private Context gameContext;
     private Quest currentQuest;
     private RPSGame rpsGame;
     private String KEY_COUNTER = "OnSaveInstance";
@@ -43,15 +47,15 @@ public class GameActivity extends AppCompatActivity {
         setContentView(R.layout.activity_game);
 
         countdownActivity = new Intent(this, CountdownActivity.class);
+        gameContext = this;
 
-        setupSharedPreferences();
         isProgressPaused(false);
         initializeUserControls();
         checkUserNeedTutorial();
     }
 
-    private void isProgressPaused(boolean paused) {
-        sharedPreferences.edit().putBoolean("onPausedProgress", paused).commit();
+    private void isProgressPaused(boolean isPaused) {
+        PreferenceSingleton.getHandler(gameContext).setOnPausedProgress(isPaused);
     }
 
     private void initializeUserControls() {
@@ -95,8 +99,8 @@ public class GameActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                sharedPreferences.edit().putInt("ExercisePoints", -100).commit();
-                sharedPreferences.edit().putBoolean("ExerciseCorrect", false).commit();
+                PreferenceSingleton.getHandler(gameContext).setExercisePoints(SKIP_POINTS);
+                PreferenceSingleton.getHandler(gameContext).setExerciseResult(UserAnswer.SKIPPED);
                 rpsGame.skip();
             }
         });
@@ -105,26 +109,21 @@ public class GameActivity extends AppCompatActivity {
     private void playerAnswerWith(Gesture answer) {
         ExerciseResult playerResult = rpsGame.solveWith(answer);
         if (playerResult.isCorrect()) {
-            rememberResult(true, playerResult.getPoints());
+            rememberResult(UserAnswer.CORRECT, playerResult.getPoints());
             rpsGame.awardPlayerPoints(playerResult.getPoints());
         } else {
-            rememberResult(false, 0);
+            rememberResult(UserAnswer.WRONG, 0);
             rpsGame.deductPlayerLife();
         }
     }
 
-    private void rememberResult(boolean result, int points) {
-        sharedPreferences.edit().putInt("ExercisePoints", points).commit();
-        sharedPreferences.edit().putBoolean("ExerciseCorrect", result).commit();
+    private void rememberResult(UserAnswer answer, int points) {
+        PreferenceSingleton.getHandler(gameContext).setExercisePoints(points);
+        PreferenceSingleton.getHandler(gameContext).setExerciseResult(answer);
     }
 
     private void startCountDownBeforeGame() {
         startActivity(countdownActivity);
-    }
-
-    private void setupSharedPreferences() {
-        String packageName = getApplicationContext().getPackageName();
-        sharedPreferences = getSharedPreferences(packageName, MODE_PRIVATE);
     }
 
     private void playExercise() {
@@ -177,7 +176,7 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void checkUserNeedTutorial() {
-        if (sharedPreferences.getBoolean("firstrun", true)) {
+        if (PreferenceSingleton.getHandler(gameContext).getFirstRun()) {
             enableUi(false);
             runTutorial();
         } else {
@@ -230,7 +229,7 @@ public class GameActivity extends AppCompatActivity {
                         if (tutorialFactory.hasTutorials()) {
                             displayTutorial(tutorialFactory.getNext());
                         } else {
-                            sharedPreferences.edit().putBoolean("firstrun", false).commit();
+                            PreferenceSingleton.getHandler(gameContext).setFirstRun(false);
                             startCountDownBeforeGame();
                         }
                     }
@@ -257,7 +256,7 @@ public class GameActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if (sharedPreferences.getBoolean("onPausedProgress", false)) {
+        if (PreferenceSingleton.getHandler(gameContext).getOnPausedProgress()) {
             rpsGame.resume();
         }
     }

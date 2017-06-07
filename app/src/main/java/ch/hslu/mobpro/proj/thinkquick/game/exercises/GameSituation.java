@@ -1,6 +1,6 @@
 package ch.hslu.mobpro.proj.thinkquick.game.exercises;
 
-import ch.hslu.mobpro.proj.thinkquick.game.helper.Gesture;
+import ch.hslu.mobpro.proj.thinkquick.game.enumerations.Gesture;
 
 /**
  * This class represents the result of a game. A result has the leftHand and rightHand of a game.

@@ -1,6 +1,6 @@
 package ch.hslu.mobpro.proj.thinkquick.game.exercises;
 
-import ch.hslu.mobpro.proj.thinkquick.game.helper.Gesture;
+import ch.hslu.mobpro.proj.thinkquick.game.enumerations.Gesture;
 
 /**
  * This class provides methods to solve RPS situations.

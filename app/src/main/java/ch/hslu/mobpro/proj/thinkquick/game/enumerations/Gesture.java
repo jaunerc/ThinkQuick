@@ -1,4 +1,4 @@
-package ch.hslu.mobpro.proj.thinkquick.game.helper;
+package ch.hslu.mobpro.proj.thinkquick.game.enumerations;
 
 /**
  * Created by Alan Meile on 05.05.2017.

@@ -2,7 +2,7 @@ package ch.hslu.mobpro.proj.thinkquick.game;
 
 import org.junit.Test;
 
-import ch.hslu.mobpro.proj.thinkquick.game.helper.Gesture;
+import ch.hslu.mobpro.proj.thinkquick.game.enumerations.Gesture;
 
 import static org.junit.Assert.assertEquals;
 

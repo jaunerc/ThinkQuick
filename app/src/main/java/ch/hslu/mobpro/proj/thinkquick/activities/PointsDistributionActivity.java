@@ -1,7 +1,6 @@
-package ch.hslu.mobpro.proj.thinkquick;
+package ch.hslu.mobpro.proj.thinkquick.activities;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -12,16 +11,18 @@ import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 
+import ch.hslu.mobpro.proj.thinkquick.R;
 import ch.hslu.mobpro.proj.thinkquick.database.DbAdapter;
 import ch.hslu.mobpro.proj.thinkquick.game.checker.PointCalculator;
+import ch.hslu.mobpro.proj.thinkquick.preferences.PreferenceSingleton;
 
 public class PointsDistributionActivity extends AppCompatActivity {
     private CheckBox tutorialBox;
-    private SharedPreferences sharedPreferences;
     private Button backToMenu;
     private Intent mainActivity;
     private CheckBox highscoreBox;
     private DbAdapter dbAdapter;
+    private PointsDistributionActivity pointsDistributionActivity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,21 +30,16 @@ public class PointsDistributionActivity extends AppCompatActivity {
         setContentView(R.layout.activity_points_distribution);
 
         mainActivity = new Intent(this, MainActivity.class);
+        pointsDistributionActivity = this;
 
         dbAdapter = new DbAdapter(this);
         tutorialBox = (CheckBox) findViewById(R.id.checkBoxTutorial);
         highscoreBox = (CheckBox) findViewById(R.id.deleteAllContent);
         backToMenu = (Button) findViewById(R.id.buttonBackToMain);
 
-        setupSharedPreferences();
         setupControls();
-        loadSettings();
-        plotGraph();
-    }
-
-    private void setupSharedPreferences() {
-        String packageName = getApplicationContext().getPackageName();
-        sharedPreferences = getSharedPreferences(packageName, MODE_PRIVATE);
+        loadTutorialSettings();
+        plotPointsGraph();
     }
 
     private void setupControls() {
@@ -52,7 +48,7 @@ public class PointsDistributionActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 boolean isChecked = tutorialBox.isChecked();
-                sharedPreferences.edit().putBoolean("firstrun", isChecked).commit();
+                PreferenceSingleton.getHandler(pointsDistributionActivity).setFirstRun(isChecked);
             }
         });
 
@@ -75,8 +71,8 @@ public class PointsDistributionActivity extends AppCompatActivity {
         });
     }
 
-    private void loadSettings() {
-        boolean isTutorialWished = sharedPreferences.getBoolean("firstrun", true);
+    private void loadTutorialSettings() {
+        boolean isTutorialWished = PreferenceSingleton.getHandler(pointsDistributionActivity).getFirstRun();
         setupCheckBox(isTutorialWished);
     }
 
@@ -84,7 +80,7 @@ public class PointsDistributionActivity extends AppCompatActivity {
         tutorialBox.setChecked(isTutorialWished);
     }
 
-    private void plotGraph() {
+    private void plotPointsGraph() {
         GraphView graph = (GraphView) findViewById(R.id.pointsGraph);
         DataPoint[] pointSerie = new DataPoint[100];
 

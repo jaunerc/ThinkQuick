@@ -1,4 +1,4 @@
-package ch.hslu.mobpro.proj.thinkquick;
+package ch.hslu.mobpro.proj.thinkquick.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 
+import ch.hslu.mobpro.proj.thinkquick.R;
 import ch.hslu.mobpro.proj.thinkquick.database.DbAdapter;
 import ch.hslu.mobpro.proj.thinkquick.database.DbResultsEntry;
 import ch.hslu.mobpro.proj.thinkquick.game.helper.PlayerStats;

@@ -1,10 +1,12 @@
-package ch.hslu.mobpro.proj.thinkquick;
+package ch.hslu.mobpro.proj.thinkquick.activities;
 
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
+
+import ch.hslu.mobpro.proj.thinkquick.R;
 
 public class SplashActivity extends AppCompatActivity {
     private static final int MAINACTIVITY_DELAY = 4000;

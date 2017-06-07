@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="ch.hslu.mobpro.proj.thinkquick.HighscoreActivity">
+    tools:context="ch.hslu.mobpro.proj.thinkquick.activities.HighscoreActivity">
 
     <ImageView
         android:id="@+id/highscoreTitleImage"

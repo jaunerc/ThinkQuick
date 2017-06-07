@@ -9,25 +9,25 @@
         android:roundIcon="@mipmap/ic_logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".SplashActivity">
+        <activity android:name=".activities.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity" />
-        <activity android:name=".GameActivity" />
-        <activity android:name=".HighscoreActivity" />
-        <activity android:name=".PointsDistributionActivity" />
-        <activity android:name=".CountdownActivity" />
-        <activity android:name=".GameOverActivity" />
+        <activity android:name=".activities.MainActivity" />
+        <activity android:name=".activities.GameActivity" />
+        <activity android:name=".activities.HighscoreActivity" />
+        <activity android:name=".activities.PointsDistributionActivity" />
+        <activity android:name=".activities.CountdownActivity" />
+        <activity android:name=".activities.GameOverActivity" />
 
         <meta-data
             android:name="android.support.PARENT_ACTIVITY"
-            android:value=".MainActivity" />
+            android:value=".activities.MainActivity" />
 
-        <activity android:name=".GameModeActivity"></activity>
+        <activity android:name=".activities.GameModeActivity"></activity>
     </application>
 
 </manifest>

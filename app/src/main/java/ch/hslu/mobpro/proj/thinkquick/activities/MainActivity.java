@@ -1,9 +1,8 @@
-package ch.hslu.mobpro.proj.thinkquick;
+package ch.hslu.mobpro.proj.thinkquick.activities;
 
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
@@ -13,9 +12,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import ch.hslu.mobpro.proj.thinkquick.R;
+import ch.hslu.mobpro.proj.thinkquick.preferences.PreferenceSingleton;
+
 public class MainActivity extends AppCompatActivity {
     private Context mainAppContext;
-    private SharedPreferences sharedPreferences;
     private Button settings;
     private Button play;
     private Button highscore;
@@ -31,14 +32,13 @@ public class MainActivity extends AppCompatActivity {
 
         mainAppContext = this;
 
-        setupSharedPreferences();
         checkGodMode();
         resetPlayerStats();
         initUiControls();
     }
 
     private void checkGodMode() {
-        if (sharedPreferences.getBoolean("GodMode", false)) {
+        if (PreferenceSingleton.getHandler(mainAppContext).getGodMode()) {
             int gold = Color.argb(255, 212, 175, 55);
             settings.setBackgroundColor(gold);
         }
@@ -77,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public boolean onLongClick(View v) {
-                boolean b = sharedPreferences.getBoolean("GodMode", false);
+                boolean b = PreferenceSingleton.getHandler(mainAppContext).getGodMode();
                 if (!b) {
                     startGodMode();
                 } else {
@@ -90,12 +90,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void endGodMode() {
-        sharedPreferences.edit().putBoolean("GodMode", false).commit();
-    }
-
-    private void setupSharedPreferences() {
-        String packageName = getPackageName();
-        sharedPreferences = getSharedPreferences(packageName, MODE_PRIVATE);
+        PreferenceSingleton.getHandler(mainAppContext).setGodMode(false);
     }
 
     private void startGodMode() {
@@ -115,7 +110,7 @@ public class MainActivity extends AppCompatActivity {
                 m_Text = input.getText().toString();
 
                 if (m_Text.equals("MobPro")) {
-                    sharedPreferences.edit().putBoolean("GodMode", true).commit();
+                    PreferenceSingleton.getHandler(mainAppContext).setGodMode(true);
                     int gold = Color.argb(255, 212, 175, 55);
                     settings.setBackgroundColor(gold);
                 }
@@ -126,12 +121,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void resetPlayerStats() {
-        sharedPreferences.edit().putInt("PlayerPoints", 0).commit();
-        sharedPreferences.edit().putInt("PlayerLife", 3).commit();
+        PreferenceSingleton.getHandler(mainAppContext).setPlayerPoints(0);
+        PreferenceSingleton.getHandler(mainAppContext).setPlayerLife(3);
     }
 
     @Override
     public void onBackPressed() {
-        // do nothing
+        Intent startMain = new Intent(Intent.ACTION_MAIN);
+        startMain.addCategory(Intent.CATEGORY_HOME);
+        startMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(startMain);
     }
 }

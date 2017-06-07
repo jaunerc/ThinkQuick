@@ -1,34 +1,32 @@
 package ch.hslu.mobpro.proj.thinkquick.game.helper;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 
-import static android.content.Context.MODE_PRIVATE;
+import ch.hslu.mobpro.proj.thinkquick.preferences.PreferenceSingleton;
 
 /**
  * Created by Alan Meile on 17.05.2017.
  */
 
 public class PlayerStats {
-    private SharedPreferences sharedPreferences;
+    private final Context context;
     private int points;
     private int life;
 
     public PlayerStats(Context context, int startPoints, int startLife) {
-        String packageName = context.getPackageName();
-        sharedPreferences = context.getSharedPreferences(packageName, MODE_PRIVATE);
-        points = sharedPreferences.getInt("PlayerPoints", startPoints);
-        life = sharedPreferences.getInt("PlayerLife", startLife);
+        this.context = context;
+        points = PreferenceSingleton.getHandler(context).getPlayerPoints();
+        life = PreferenceSingleton.getHandler(context).getPlayerLife();
     }
 
     public void awardPoints(int awardedPoints) {
         points += awardedPoints;
-        sharedPreferences.edit().putInt("PlayerPoints", points).commit();
+        PreferenceSingleton.getHandler(context).setPlayerPoints(awardedPoints);
     }
 
     public void deductLife() {
         life--;
-        sharedPreferences.edit().putInt("PlayerLife", life).commit();
+        PreferenceSingleton.getHandler(context).setPlayerLife(life);
     }
 
     public int getPoints() {

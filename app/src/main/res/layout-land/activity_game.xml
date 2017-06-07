@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background"
-    tools:context="ch.hslu.mobpro.proj.thinkquick.GameActivity">
+    tools:context="ch.hslu.mobpro.proj.thinkquick.activities.GameActivity">
 
 
     <ImageButton

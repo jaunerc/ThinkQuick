@@ -10,7 +10,7 @@ import android.view.View;
  */
 
 public class GameAnimator {
-    private final static int DURATION = 1000;
+    private final static int DURATION = 0;
 
     private GameAnimator() {
     }

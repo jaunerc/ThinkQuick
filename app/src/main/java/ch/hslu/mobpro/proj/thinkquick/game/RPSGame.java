@@ -29,9 +29,6 @@ import ch.hslu.mobpro.proj.thinkquick.preferences.PreferenceSingleton;
 
 public class RPSGame {
     private final static int MAX_PROGRESS = 100;
-    private final static int MIN_PROGRESS = 0;
-    private final static int START_POINTS = 0;
-    private final static int START_LIFE = 3;
     private int progressPausedAt;
     private ProgressTime progressTime;
     private PlayerStats playerStats;
@@ -42,7 +39,7 @@ public class RPSGame {
 
     public void start(Context gameView) {
         this.gameView = gameView;
-        playerStats = new PlayerStats(gameView, START_POINTS, START_LIFE);
+        playerStats = new PlayerStats(gameView);
         progressBar = (ProgressBar) ((Activity) gameView).findViewById(R.id.timeView);
         initExerciseFactory();
     }
@@ -86,6 +83,7 @@ public class RPSGame {
     public void skip() {
         stopProgressBarTask();
         playerStats.awardPoints(-100);
+        PreferenceSingleton.getHandler(gameView).setExerciseResult(UserAnswer.SKIPPED);
         showCountDownActivity();
     }
 

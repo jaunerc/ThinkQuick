@@ -4,13 +4,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
-import android.widget.TextView;
 
 import ch.hslu.mobpro.proj.thinkquick.R;
+import ch.hslu.mobpro.proj.thinkquick.game.handler.CountDownBackgroundHandler;
 import ch.hslu.mobpro.proj.thinkquick.preferences.PreferenceSingleton;
 
 public class CountdownActivity extends AppCompatActivity {
     private final static int DELAY = 1000;
+    private CountDownBackgroundHandler countDownBackgroundHandler;
     private Handler countDown;
     private Intent gameActivity;
 
@@ -19,29 +20,22 @@ public class CountdownActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_countdown);
 
+        countDownBackgroundHandler = new CountDownBackgroundHandler(this);
         gameActivity = new Intent(this, GameActivity.class);
 
+        setExercisePoints();
         setExerciseResult();
         startCountDown();
     }
 
     private void setExerciseResult() {
-        TextView countDownPoints = (TextView) findViewById(R.id.countDownPoints);
-        int points = PreferenceSingleton.getHandler(this).getExercisePoints();
+        countDownBackgroundHandler.setCountDownBackgroundFromAnswer(
+                PreferenceSingleton.getHandler(this).getExerciseResult());
+    }
 
-        if (points >= 0) {
-            countDownPoints.setText("+ " + Integer.toString(points));
-        } else {
-            countDownPoints.setText("- " + Integer.toString(-1 * points));
-        }
-
-
-        /*if (PreferenceSingleton.getHandler(this).getExerciseResult()) {
-
-        } else {
-
-        }*/
-
+    private void setExercisePoints() {
+        countDownBackgroundHandler.setCountDownPoints(
+                PreferenceSingleton.getHandler(this).getExercisePoints());
     }
 
     private void startCountDown() {
@@ -71,6 +65,12 @@ public class CountdownActivity extends AppCompatActivity {
     protected void onStop() {
         super.onStop();
         cancelCountDown();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        countDownOneStep();
     }
 
     @Override

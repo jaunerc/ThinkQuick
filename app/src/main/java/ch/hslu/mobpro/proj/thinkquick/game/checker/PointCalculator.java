@@ -6,9 +6,9 @@ package ch.hslu.mobpro.proj.thinkquick.game.checker;
 
 public class PointCalculator {
     private static final int POINT_HELP = 20;
-    private static final int MIN_POINTS = 1000;
+    private static final int MIN_POINTS = 100;
     private static final int POINT_FACTOR = 10;
-    private static final int POINT_EXPONENT = 4;
+    private static final int POINT_EXPONENT = 3;
 
     private PointCalculator() {}
 

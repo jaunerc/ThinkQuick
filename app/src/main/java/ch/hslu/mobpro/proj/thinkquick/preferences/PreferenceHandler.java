@@ -46,7 +46,7 @@ public class PreferenceHandler {
     }
 
     public void setExerciseResult(UserAnswer userAnswer) {
-        sharedPreferences.edit().putInt("ExerciseResult", userAnswer.getColor()).commit();
+        sharedPreferences.edit().putInt("ExerciseResult", userAnswer.getValue()).commit();
     }
 
     public boolean getFirstRun() {

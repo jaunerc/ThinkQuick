@@ -13,7 +13,7 @@ public class PlayerStats {
     private int points;
     private int life;
 
-    public PlayerStats(Context context, int startPoints, int startLife) {
+    public PlayerStats(Context context) {
         this.context = context;
         points = PreferenceSingleton.getHandler(context).getPlayerPoints();
         life = PreferenceSingleton.getHandler(context).getPlayerLife();

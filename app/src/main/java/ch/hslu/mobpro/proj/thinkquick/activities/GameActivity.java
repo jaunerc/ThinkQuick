@@ -30,7 +30,7 @@ import uk.co.samuelwall.materialtaptargetprompt.MaterialTapTargetPrompt;
 public class GameActivity extends AppCompatActivity {
     private final static int SKIP_POINTS = -100;
     private final static int ANIMATION_DELAY_FIRST = 500;
-    private final static int ANIMATION_DELAY_SECOND = 2000;
+    private final static int ANIMATION_DELAY_SECOND = 1500;
     private Intent countdownActivity;
     private TutorialFactory tutorialFactory;
     private GameSituation currentGameSituation;
@@ -196,6 +196,8 @@ public class GameActivity extends AppCompatActivity {
         tutorialFactory = new TutorialFactory();
         disableUserControls();
 
+        PreferenceSingleton.getHandler(this).setExerciseResult(UserAnswer.DEFAULT);
+
         tutorialFactory.initModul();
         displayTutorial(tutorialFactory.getNext());
     }
@@ -256,8 +258,10 @@ public class GameActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if (PreferenceSingleton.getHandler(gameContext).getOnPausedProgress()) {
-            rpsGame.resume();
+        if (rpsGame != null) {
+            if (PreferenceSingleton.getHandler(gameContext).getOnPausedProgress()) {
+                rpsGame.resume();
+            }
         }
     }
 
@@ -271,7 +275,11 @@ public class GameActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        rpsGame.gameOver();
+        if (rpsGame != null) {
+            rpsGame.gameOver();
+        } else {
+            startActivity(new Intent(this, MainActivity.class));
+        }
     }
 
     @Override

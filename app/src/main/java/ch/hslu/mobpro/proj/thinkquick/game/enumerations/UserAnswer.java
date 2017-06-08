@@ -1,21 +1,19 @@
 package ch.hslu.mobpro.proj.thinkquick.game.enumerations;
 
-import android.graphics.Color;
-
 /**
  * Created by Alan Meile on 05.06.2017.
  */
 
 public enum UserAnswer {
-    CORRECT(Color.GREEN), WRONG(Color.RED), SKIPPED(Color.YELLOW);
+    DEFAULT(0), CORRECT(1), WRONG(2), SKIPPED(3);
 
-    private final int color;
+    private final int value;
 
-    UserAnswer(int color) {
-        this.color = color;
+    UserAnswer(int value) {
+        this.value = value;
     }
 
-    public int getColor() {
-        return color;
+    public int getValue() {
+        return value;
     }
 }

@@ -31,7 +31,7 @@ public class GameOverActivity extends AppCompatActivity {
         mainActivity = new Intent(this, MainActivity.class);
 
         TextView playerPoints = (TextView) findViewById(R.id.gameOverPoints);
-        PlayerStats playerStats = new PlayerStats(this, 0, 3);
+        PlayerStats playerStats = new PlayerStats(this);
         playerPoints.setText(getString(R.string.gameover_points_description) + " " + playerStats.getPoints());
 
         saveResultOnDB(playerStats.getPoints());

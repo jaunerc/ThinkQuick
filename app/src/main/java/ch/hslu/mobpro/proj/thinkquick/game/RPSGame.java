@@ -21,6 +21,7 @@ import ch.hslu.mobpro.proj.thinkquick.game.exercises.Quest;
 import ch.hslu.mobpro.proj.thinkquick.game.exercises.QuestBacklog;
 import ch.hslu.mobpro.proj.thinkquick.game.helper.PlayerStats;
 import ch.hslu.mobpro.proj.thinkquick.game.helper.ProgressTime;
+import ch.hslu.mobpro.proj.thinkquick.game.mode.GameModeStrategy;
 import ch.hslu.mobpro.proj.thinkquick.preferences.PreferenceSingleton;
 
 /**
@@ -36,12 +37,15 @@ public class RPSGame {
     private Exercise currentExercise;
     private Context gameView;
     private ProgressBar progressBar;
+    private GameModeStrategy gameMode;
 
-    public void start(Context gameView) {
+    public void start(final Context gameView, final GameModeStrategy gameMode) {
         this.gameView = gameView;
+        this.gameMode = gameMode;
         playerStats = new PlayerStats(gameView);
         progressBar = (ProgressBar) ((Activity) gameView).findViewById(R.id.timeView);
         initExerciseFactory();
+        initGameMode();
     }
 
     private void initExerciseFactory() {
@@ -50,12 +54,25 @@ public class RPSGame {
         exerciseFactory = new ExerciseFactory(new Random(), questBacklog);
     }
 
+    private void initGameMode() {
+        if(gameMode != null) {
+            gameMode.init();
+        }
+    }
+
     public void nextExercise() {
+        prepareNextExercise();
         startProgressCountDown();
         if (new Random().nextInt(5) >= 2) {
             currentExercise = exerciseFactory.hardExercise();
         } else {
             currentExercise = exerciseFactory.easyExercise();
+        }
+    }
+
+    private void prepareNextExercise() {
+        if(gameMode != null) {
+            gameMode.updateGameforNextExercise(gameView);
         }
     }
 
@@ -163,5 +180,13 @@ public class RPSGame {
     public void orientationChanged(int currentProgress) {
         stopProgressBarTask();
         startProgressCountDown(currentProgress);
+    }
+
+    public GameModeStrategy getGameMode() {
+        return gameMode;
+    }
+
+    public void setGameMode(GameModeStrategy gameMode) {
+        this.gameMode = gameMode;
     }
 }

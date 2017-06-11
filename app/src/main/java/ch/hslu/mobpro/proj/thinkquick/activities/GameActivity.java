@@ -22,6 +22,11 @@ import ch.hslu.mobpro.proj.thinkquick.game.enumerations.UserAnswer;
 import ch.hslu.mobpro.proj.thinkquick.game.exercises.GameSituation;
 import ch.hslu.mobpro.proj.thinkquick.game.exercises.Quest;
 import ch.hslu.mobpro.proj.thinkquick.game.helper.GameAnimator;
+import ch.hslu.mobpro.proj.thinkquick.game.mode.EndlessMode;
+import ch.hslu.mobpro.proj.thinkquick.game.mode.GameConfigGenerator;
+import ch.hslu.mobpro.proj.thinkquick.game.mode.GameModeStrategy;
+import ch.hslu.mobpro.proj.thinkquick.game.mode.HardcoreMode;
+import ch.hslu.mobpro.proj.thinkquick.game.mode.SurpriseMode;
 import ch.hslu.mobpro.proj.thinkquick.game.tutorial.Tutorial;
 import ch.hslu.mobpro.proj.thinkquick.game.tutorial.TutorialFactory;
 import ch.hslu.mobpro.proj.thinkquick.preferences.PreferenceSingleton;
@@ -38,8 +43,10 @@ public class GameActivity extends AppCompatActivity {
     private Quest currentQuest;
     private RPSGame rpsGame;
     private String KEY_COUNTER = "OnSaveInstance";
+    private String GAME_MODE_INDEX = "gamemode";
     private ImageButton rock, paper, scissor;
     private Button skip;
+    private int gameModeIndex;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,9 +56,31 @@ public class GameActivity extends AppCompatActivity {
         countdownActivity = new Intent(this, CountdownActivity.class);
         gameContext = this;
 
+        checkForGameMode();
         isProgressPaused(false);
         initializeUserControls();
         checkUserNeedTutorial();
+    }
+
+    private void checkForGameMode() {
+        final Intent intent = getIntent();
+        final int index = intent.getIntExtra(GameModeActivity.GAMEMODE_INDEX, GameModeActivity.NONE_MODE_INDEX);
+        if(index != GameModeActivity.NONE_MODE_INDEX) {
+            gameModeIndex = index;
+        }
+    }
+
+    private GameModeStrategy getModeFromIndex() {
+        final GameConfigGenerator generator = new GameConfigGenerator(this);
+        GameModeStrategy strategy = null;
+        if(gameModeIndex == GameModeActivity.ENDLESS_MODE_INDEX) {
+            strategy = new EndlessMode(generator.makeEndlessConfig());
+        } else if(gameModeIndex == GameModeActivity.HARDCORE_MODE_INDEX) {
+            strategy = new HardcoreMode(generator.makeHardcoreConfig());
+        } else if(gameModeIndex == GameModeActivity.SURPRISE_MODE_INDEX) {
+            strategy = new SurpriseMode(generator.makeSurpriseConfig());
+        }
+        return strategy;
     }
 
     private void isProgressPaused(boolean isPaused) {
@@ -168,7 +197,7 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void handOverActivityContext() {
-        rpsGame.start(this);
+        rpsGame.start(this, getModeFromIndex());
     }
 
     private void initGame() {
@@ -286,12 +315,14 @@ public class GameActivity extends AppCompatActivity {
     protected void onSaveInstanceState(Bundle outState) {
         ProgressBar progressBar = (ProgressBar) findViewById(R.id.timeView);
         outState.putInt(KEY_COUNTER, progressBar.getProgress());
+        outState.putInt(GAME_MODE_INDEX, gameModeIndex);
         super.onSaveInstanceState(outState);
     }
 
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         int currentProgress = savedInstanceState.getInt(KEY_COUNTER);
+        gameModeIndex = savedInstanceState.getInt(GAME_MODE_INDEX);
         rpsGame.orientationChanged(currentProgress);
         super.onRestoreInstanceState(savedInstanceState);
     }

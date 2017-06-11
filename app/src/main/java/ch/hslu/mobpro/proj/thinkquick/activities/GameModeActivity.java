@@ -12,9 +12,10 @@ import ch.hslu.mobpro.proj.thinkquick.R;
  */
 public class GameModeActivity extends AppCompatActivity {
 
-    private final static int ENDLESS_MODE_INDEX = 1;
-    private final static int HARDCORE_MODE_INDEX = 2;
-    private final static int SURPRISE_MODE_INDEX = 3;
+    public final static int ENDLESS_MODE_INDEX = 1;
+    public final static int HARDCORE_MODE_INDEX = 2;
+    public final static int SURPRISE_MODE_INDEX = 3;
+    public final static int NONE_MODE_INDEX = -1;
     public final static String GAMEMODE_INDEX = "gamemode";
 
     @Override
@@ -39,5 +40,6 @@ public class GameModeActivity extends AppCompatActivity {
         final Intent gameIntent = new Intent(this, GameActivity.class);
         gameIntent.putExtra(GAMEMODE_INDEX, modeIndex);
         startActivity(gameIntent);
+        finish();
     }
 }

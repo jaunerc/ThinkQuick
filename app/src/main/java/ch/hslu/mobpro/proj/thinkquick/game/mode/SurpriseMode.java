@@ -7,6 +7,12 @@ import android.content.Context;
  */
 
 public class SurpriseMode implements GameModeStrategy {
+    private GameConfig gameConfig;
+
+    public SurpriseMode(final GameConfig gameConfig) {
+        this.gameConfig = gameConfig;
+    }
+
     @Override
     public void init() {
 
@@ -19,6 +25,6 @@ public class SurpriseMode implements GameModeStrategy {
 
     @Override
     public GameConfig getGameConfig() {
-        return null;
+        return gameConfig;
     }
 }

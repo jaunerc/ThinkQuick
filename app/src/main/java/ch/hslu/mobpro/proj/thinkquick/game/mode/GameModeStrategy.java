@@ -2,6 +2,8 @@ package ch.hslu.mobpro.proj.thinkquick.game.mode;
 
 import android.content.Context;
 
+import ch.hslu.mobpro.proj.thinkquick.game.RPSGame;
+
 /**
  * This interface provides a game mode.
  */
@@ -15,9 +17,9 @@ public interface GameModeStrategy {
 
     /**
      * Updates the game config for the next exercise.
-     * @param context The application context.
+     * @param rpsGame The game instance.
      */
-    void updateGameforNextExercise(Context context);
+    void updateGameforNextExercise(RPSGame rpsGame);
 
     /**
      * Returns the current game config.

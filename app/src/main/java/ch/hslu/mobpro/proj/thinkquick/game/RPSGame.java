@@ -9,6 +9,7 @@ import java.util.Random;
 
 import ch.hslu.mobpro.proj.thinkquick.R;
 import ch.hslu.mobpro.proj.thinkquick.activities.CountdownActivity;
+import ch.hslu.mobpro.proj.thinkquick.activities.GameActivity;
 import ch.hslu.mobpro.proj.thinkquick.activities.GameOverActivity;
 import ch.hslu.mobpro.proj.thinkquick.game.checker.ExerciseResult;
 import ch.hslu.mobpro.proj.thinkquick.game.checker.ResultChecker;
@@ -31,6 +32,7 @@ import ch.hslu.mobpro.proj.thinkquick.preferences.PreferenceSingleton;
 public class RPSGame {
     private final static int MAX_PROGRESS = 100;
     private int progressPausedAt;
+    private int maxProgress;
     private ProgressTime progressTime;
     private PlayerStats playerStats;
     private ExerciseFactory exerciseFactory;
@@ -72,15 +74,15 @@ public class RPSGame {
 
     private void prepareNextExercise() {
         if(gameMode != null) {
-            gameMode.updateGameforNextExercise(gameView);
+            gameMode.updateGameforNextExercise(this);
         }
     }
 
     private void startProgressCountDown() {
         if (!PreferenceSingleton.getHandler(gameView).getGodMode()) {
-            progressBar.setMax(MAX_PROGRESS);
+            progressBar.setMax(maxProgress);
             progressTime = new ProgressTime(progressBar, this);
-            progressTime.execute(MAX_PROGRESS);
+            progressTime.execute(maxProgress);
         }
     }
 
@@ -147,7 +149,7 @@ public class RPSGame {
     }
 
     private void showCountDownActivity() {
-        Intent countDownActivity = new Intent(gameView, CountdownActivity.class);
+        final Intent countDownActivity = ((GameActivity) gameView).getCountdownActivity();
         gameView.startActivity(countDownActivity);
     }
 
@@ -188,5 +190,9 @@ public class RPSGame {
 
     public void setGameMode(GameModeStrategy gameMode) {
         this.gameMode = gameMode;
+    }
+
+    public void setMaxProgress(final int maxProgress) {
+        this.maxProgress = maxProgress;
     }
 }

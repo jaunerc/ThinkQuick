@@ -2,6 +2,8 @@ package ch.hslu.mobpro.proj.thinkquick.game.mode;
 
 import android.content.Context;
 
+import ch.hslu.mobpro.proj.thinkquick.game.RPSGame;
+
 /**
  *
  */
@@ -19,7 +21,7 @@ public class HardcoreMode implements GameModeStrategy {
     }
 
     @Override
-    public void updateGameforNextExercise(Context context) {
+    public void updateGameforNextExercise(final RPSGame rpsGame) {
 
     }
 

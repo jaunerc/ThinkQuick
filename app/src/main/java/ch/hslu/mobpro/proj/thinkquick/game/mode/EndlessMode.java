@@ -2,6 +2,8 @@ package ch.hslu.mobpro.proj.thinkquick.game.mode;
 
 import android.content.Context;
 
+import ch.hslu.mobpro.proj.thinkquick.game.RPSGame;
+
 /**
  * This class represents the endless game mode.
  */
@@ -19,8 +21,8 @@ public class EndlessMode implements GameModeStrategy {
     }
 
     @Override
-    public void updateGameforNextExercise(Context context) {
-        // do nothing in this mode.
+    public void updateGameforNextExercise(final RPSGame rpsGame) {
+        rpsGame.setMaxProgress(gameConfig.getMaxProgress());
     }
 
     @Override

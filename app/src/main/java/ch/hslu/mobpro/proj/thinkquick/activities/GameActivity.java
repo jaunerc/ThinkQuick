@@ -6,6 +6,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
@@ -33,6 +34,8 @@ import ch.hslu.mobpro.proj.thinkquick.preferences.PreferenceSingleton;
 import uk.co.samuelwall.materialtaptargetprompt.MaterialTapTargetPrompt;
 
 public class GameActivity extends AppCompatActivity {
+    public final static String GAME_MODE_EXTRA = "gamemode";
+
     private final static int SKIP_POINTS = -100;
     private final static int ANIMATION_DELAY_FIRST = 500;
     private final static int ANIMATION_DELAY_SECOND = 1500;
@@ -43,7 +46,6 @@ public class GameActivity extends AppCompatActivity {
     private Quest currentQuest;
     private RPSGame rpsGame;
     private String KEY_COUNTER = "OnSaveInstance";
-    private String GAME_MODE_INDEX = "gamemode";
     private ImageButton rock, paper, scissor;
     private Button skip;
     private int gameModeIndex;
@@ -67,6 +69,7 @@ public class GameActivity extends AppCompatActivity {
         final int index = intent.getIntExtra(GameModeActivity.GAMEMODE_INDEX, GameModeActivity.NONE_MODE_INDEX);
         if(index != GameModeActivity.NONE_MODE_INDEX) {
             gameModeIndex = index;
+            countdownActivity.putExtra(GAME_MODE_EXTRA, gameModeIndex);
         }
     }
 
@@ -315,15 +318,23 @@ public class GameActivity extends AppCompatActivity {
     protected void onSaveInstanceState(Bundle outState) {
         ProgressBar progressBar = (ProgressBar) findViewById(R.id.timeView);
         outState.putInt(KEY_COUNTER, progressBar.getProgress());
-        outState.putInt(GAME_MODE_INDEX, gameModeIndex);
+        outState.putInt(GAME_MODE_EXTRA, gameModeIndex);
         super.onSaveInstanceState(outState);
     }
 
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         int currentProgress = savedInstanceState.getInt(KEY_COUNTER);
-        gameModeIndex = savedInstanceState.getInt(GAME_MODE_INDEX);
+        gameModeIndex = savedInstanceState.getInt(GAME_MODE_EXTRA);
         rpsGame.orientationChanged(currentProgress);
         super.onRestoreInstanceState(savedInstanceState);
+    }
+
+    public int getGameModeIndex() {
+        return gameModeIndex;
+    }
+
+    public Intent getCountdownActivity() {
+        return countdownActivity;
     }
 }

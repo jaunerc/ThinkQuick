@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 
 import ch.hslu.mobpro.proj.thinkquick.R;
 import ch.hslu.mobpro.proj.thinkquick.game.handler.CountDownBackgroundHandler;
@@ -23,9 +24,16 @@ public class CountdownActivity extends AppCompatActivity {
         countDownBackgroundHandler = new CountDownBackgroundHandler(this);
         gameActivity = new Intent(this, GameActivity.class);
 
+        resetGameModeIndex(GameActivity.GAME_MODE_EXTRA);
         setExercisePoints();
         setExerciseResult();
         startCountDown();
+    }
+
+    private void resetGameModeIndex(final String gameModeExtra) {
+        final int gameModeIndex = getIntent().getIntExtra(gameModeExtra, 0);
+        Log.i("mode_index_countdown", ""+gameModeIndex);
+        gameActivity.putExtra(gameModeExtra, gameModeIndex);
     }
 
     private void setExerciseResult() {

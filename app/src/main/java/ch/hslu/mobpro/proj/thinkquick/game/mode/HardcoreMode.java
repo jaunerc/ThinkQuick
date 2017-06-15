@@ -29,4 +29,19 @@ public class HardcoreMode implements GameModeStrategy {
     public GameConfig getGameConfig() {
         return gameConfig;
     }
+
+    @Override
+    public void storeInPreferences(Context context) {
+
+    }
+
+    @Override
+    public void restoreFromPreferences(Context context) {
+
+    }
+
+    @Override
+    public void gameOver(Context context) {
+
+    }
 }

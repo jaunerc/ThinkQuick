@@ -8,7 +8,6 @@ import android.widget.ProgressBar;
 import java.util.Random;
 
 import ch.hslu.mobpro.proj.thinkquick.R;
-import ch.hslu.mobpro.proj.thinkquick.activities.CountdownActivity;
 import ch.hslu.mobpro.proj.thinkquick.activities.GameActivity;
 import ch.hslu.mobpro.proj.thinkquick.activities.GameOverActivity;
 import ch.hslu.mobpro.proj.thinkquick.game.checker.ExerciseResult;
@@ -59,6 +58,7 @@ public class RPSGame {
     private void initGameMode() {
         if(gameMode != null) {
             gameMode.init();
+            gameMode.restoreFromPreferences(gameView);
         }
     }
 
@@ -95,6 +95,7 @@ public class RPSGame {
     }
 
     public void gameOver() {
+        gameMode.gameOver(gameView);
         Intent gameOver = new Intent(gameView, GameOverActivity.class);
         gameView.startActivity(gameOver);
     }
@@ -150,6 +151,7 @@ public class RPSGame {
 
     private void showCountDownActivity() {
         final Intent countDownActivity = ((GameActivity) gameView).getCountdownActivity();
+        gameMode.storeInPreferences(gameView);
         gameView.startActivity(countDownActivity);
     }
 

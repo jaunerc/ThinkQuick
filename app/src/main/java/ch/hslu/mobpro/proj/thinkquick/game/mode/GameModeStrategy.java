@@ -26,4 +26,25 @@ public interface GameModeStrategy {
      * @return Game config.
      */
     GameConfig getGameConfig();
+
+    /**
+     * Stores all required data in app preferences.
+     *
+     * @param context The application context.
+     */
+    void storeInPreferences(Context context);
+
+    /**
+     * Loads all required data from app preferences.
+     *
+     * @param context The application context.
+     */
+    void restoreFromPreferences(Context context);
+
+    /**
+     * Handle game over.
+     *
+     * @param context The application context.
+     */
+    void gameOver(Context context);
 }

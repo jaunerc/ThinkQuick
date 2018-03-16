@@ -115,6 +115,10 @@ public class RPSGame {
         stopProgressBarTask();
         playerStats.awardPoints(-100);
         PreferenceSingleton.getHandler(gameView).setExerciseResult(UserAnswer.SKIPPED);
+
+        PreferenceSingleton.getHandler(gameView).setCurrentProgress(0);
+        progressBar.setProgress(0);
+
         showCountDownActivity();
     }
 
@@ -141,6 +145,10 @@ public class RPSGame {
         ProgressBar progressBar = getGameViewProgressBar();
         ResultChecker resultChecker = new ResultChecker(progressBar.getMax());
         ExerciseResult result = resultChecker.checkAnswer(currentExercise.getQuest(), answer, progressBar.getProgress());
+
+        PreferenceSingleton.getHandler(gameView).setCurrentProgress(0);
+        progressBar.setProgress(0);
+
         return result;
     }
 

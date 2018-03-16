@@ -44,7 +44,6 @@ public class GameActivity extends AppCompatActivity {
     private Context gameContext;
     private Quest currentQuest;
     private RPSGame rpsGame;
-    private String KEY_COUNTER = "OnSaveInstance";
     private ImageButton rock, paper, scissor;
     private Button skip;
     private int gameModeIndex;

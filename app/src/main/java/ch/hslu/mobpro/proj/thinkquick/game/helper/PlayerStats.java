@@ -10,18 +10,15 @@ import ch.hslu.mobpro.proj.thinkquick.preferences.PreferenceSingleton;
 
 public class PlayerStats {
     private final Context context;
-    private int points;
     private int life;
 
     public PlayerStats(Context context) {
         this.context = context;
-        points = PreferenceSingleton.getHandler(context).getPlayerPoints();
         life = PreferenceSingleton.getHandler(context).getPlayerLife();
     }
 
     public void awardPoints(int awardedPoints) {
-        points += awardedPoints;
-        PreferenceSingleton.getHandler(context).setPlayerPoints(awardedPoints);
+        PreferenceSingleton.getHandler(context).setPlayerPoints(getPoints() + awardedPoints);
     }
 
     public void deductLife() {
@@ -30,7 +27,7 @@ public class PlayerStats {
     }
 
     public int getPoints() {
-        return points;
+        return PreferenceSingleton.getHandler(context).getPlayerPoints();
     }
 
     public int getLife() {

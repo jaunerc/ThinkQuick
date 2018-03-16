@@ -6,7 +6,6 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
@@ -204,7 +203,8 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void initGame() {
-        rpsGame = new RPSGame();
+        int currentProgress = PreferenceSingleton.getHandler(gameContext).getCurrentProgress();
+        rpsGame = new RPSGame(currentProgress);
     }
 
     private void checkUserNeedTutorial() {
@@ -317,16 +317,16 @@ public class GameActivity extends AppCompatActivity {
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         ProgressBar progressBar = (ProgressBar) findViewById(R.id.timeView);
-        outState.putInt(KEY_COUNTER, progressBar.getProgress());
+        //outState.putInt(KEY_COUNTER, progressBar.getProgress());
+        PreferenceSingleton.getHandler(gameContext).setCurrentProgress(progressBar.getProgress());
         outState.putInt(GAME_MODE_EXTRA, gameModeIndex);
         super.onSaveInstanceState(outState);
     }
 
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
-        int currentProgress = savedInstanceState.getInt(KEY_COUNTER);
+        //int currentProgress = savedInstanceState.getInt(KEY_COUNTER);
         gameModeIndex = savedInstanceState.getInt(GAME_MODE_EXTRA);
-        rpsGame.orientationChanged(currentProgress);
         super.onRestoreInstanceState(savedInstanceState);
     }
 

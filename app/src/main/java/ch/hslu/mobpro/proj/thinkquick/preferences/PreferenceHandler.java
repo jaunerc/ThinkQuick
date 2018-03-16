@@ -80,4 +80,12 @@ public class PreferenceHandler {
     public void setPlayerLife(int playerLife) {
         sharedPreferences.edit().putInt("PlayerLife", playerLife).commit();
     }
+
+    public int getCurrentProgress() {
+        return sharedPreferences.getInt("CurrentProgress", 0);
+    }
+
+    public void setCurrentProgress(int progress) {
+        sharedPreferences.edit().putInt("CurrentProgress", progress).commit();
+    }
 }

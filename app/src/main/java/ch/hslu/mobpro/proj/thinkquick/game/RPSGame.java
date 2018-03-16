@@ -39,6 +39,11 @@ public class RPSGame {
     private Context gameView;
     private ProgressBar progressBar;
     private GameModeStrategy gameMode;
+    private int currentProgress = 0;
+
+    public RPSGame(int currentProgress) {
+        this.currentProgress = currentProgress;
+    }
 
     public void start(final Context gameView, final GameModeStrategy gameMode) {
         this.gameView = gameView;
@@ -64,7 +69,13 @@ public class RPSGame {
 
     public void nextExercise() {
         prepareNextExercise();
-        startProgressCountDown();
+
+        if (currentProgress == 0) {
+            startProgressCountDown();
+        } else {
+            startProgressCountDown(currentProgress);
+        }
+
         if (new Random().nextInt(5) >= 2) {
             currentExercise = exerciseFactory.hardExercise();
         } else {
@@ -121,6 +132,7 @@ public class RPSGame {
     }
 
     public void timeUp() {
+        PreferenceSingleton.getHandler(gameView).setCurrentProgress(0);
         deductPlayerLife();
     }
 
@@ -179,11 +191,6 @@ public class RPSGame {
 
     private ProgressBar getGameViewProgressBar() {
         return (ProgressBar) ((Activity) gameView).findViewById(R.id.timeView);
-    }
-
-    public void orientationChanged(int currentProgress) {
-        stopProgressBarTask();
-        startProgressCountDown(currentProgress);
     }
 
     public GameModeStrategy getGameMode() {

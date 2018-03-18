@@ -6,6 +6,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import ch.hslu.mobpro.proj.thinkquick.R;
+import ch.hslu.mobpro.proj.thinkquick.game.mode.GameConfig;
+import ch.hslu.mobpro.proj.thinkquick.game.mode.GameConfigGenerator;
+import ch.hslu.mobpro.proj.thinkquick.game.mode.GameModeStrategy;
+import ch.hslu.mobpro.proj.thinkquick.preferences.PreferenceSingleton;
 
 /**
  * This Activity shows a menu to choose a game mode.
@@ -37,9 +41,24 @@ public class GameModeActivity extends AppCompatActivity {
     }
 
     private void startGameActivity(final int modeIndex) {
+        setStartLifeByIndex(modeIndex);
         final Intent gameIntent = new Intent(this, GameActivity.class);
         gameIntent.putExtra(GAMEMODE_INDEX, modeIndex);
         startActivity(gameIntent);
         finish();
+    }
+
+    private void setStartLifeByIndex(final int modeIndex) {
+        GameConfigGenerator generator = new GameConfigGenerator(this);
+        GameConfig config = null;
+        switch (modeIndex) {
+            case HARDCORE_MODE_INDEX:
+                config = generator.makeHardcoreConfig();
+                break;
+            default:
+                config = generator.makeEndlessConfig();
+        }
+
+        PreferenceSingleton.getHandler(this).setPlayerLife(config.getStartLife());
     }
 }

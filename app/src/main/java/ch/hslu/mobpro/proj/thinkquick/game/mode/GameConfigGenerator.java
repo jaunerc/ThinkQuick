@@ -29,9 +29,9 @@ public class GameConfigGenerator {
     }
 
     private GameConfig makeConfig(final int progressId, final int pointsId, final int lifeId) {
-        final int maxProgress = context.getResources().getInteger(R.integer.endless_maxprogress);
-        final int startPoints = context.getResources().getInteger(R.integer.endless_startpoints);
-        final int startLife = context.getResources().getInteger(R.integer.endless_startlife);
+        final int maxProgress = context.getResources().getInteger(progressId);
+        final int startPoints = context.getResources().getInteger(pointsId);
+        final int startLife = context.getResources().getInteger(lifeId);
         return new GameConfig(maxProgress, startPoints, startLife);
     }
 }

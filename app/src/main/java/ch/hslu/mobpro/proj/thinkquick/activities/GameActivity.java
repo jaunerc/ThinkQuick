@@ -316,7 +316,6 @@ public class GameActivity extends AppCompatActivity {
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         ProgressBar progressBar = (ProgressBar) findViewById(R.id.timeView);
-        //outState.putInt(KEY_COUNTER, progressBar.getProgress());
         PreferenceSingleton.getHandler(gameContext).setCurrentProgress(progressBar.getProgress());
         outState.putInt(GAME_MODE_EXTRA, gameModeIndex);
         super.onSaveInstanceState(outState);
@@ -324,7 +323,6 @@ public class GameActivity extends AppCompatActivity {
 
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
-        //int currentProgress = savedInstanceState.getInt(KEY_COUNTER);
         gameModeIndex = savedInstanceState.getInt(GAME_MODE_EXTRA);
         super.onRestoreInstanceState(savedInstanceState);
     }

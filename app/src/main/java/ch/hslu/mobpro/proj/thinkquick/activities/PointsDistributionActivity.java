@@ -1,5 +1,7 @@
 package ch.hslu.mobpro.proj.thinkquick.activities;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -56,8 +58,27 @@ public class PointsDistributionActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                dbAdapter.open();
-                dbAdapter.clearAllContent();
+                AlertDialog alertDialog = new AlertDialog.Builder(PointsDistributionActivity.this).create();
+                alertDialog.setTitle(R.string.delete_highscore_title);
+
+                alertDialog.setMessage(getString(R.string.delete_highscore));
+                alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, getString(R.string.delete_approve),
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                dbAdapter.open();
+                                dbAdapter.clearAllContent();
+                                dialog.dismiss();
+                            }
+                        });
+
+                alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, getString(R.string.delete_deny),
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                highscoreBox.setChecked(false);
+                                dialog.dismiss();
+                            }
+                        });
+                alertDialog.show();
             }
         });
 

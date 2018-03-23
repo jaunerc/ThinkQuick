@@ -33,4 +33,8 @@
     <string name="game_mode_btn_endless">Endlos</string>
     <string name="game_mode_btn_hardcore">Hardcore</string>
     <string name="game_mode_btn_surprise">Surprise</string>
+    <string name="delete_highscore_title">Highscore löschen</string>
+    <string name="delete_highscore">Möchtest du wirklich deine History löschen?</string>
+    <string name="delete_approve">Ja</string>
+    <string name="delete_deny">Nein</string>
 </resources>

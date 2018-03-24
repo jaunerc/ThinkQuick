@@ -26,6 +26,7 @@ public class HardcoreMode implements GameModeStrategy {
 
     @Override
     public void updateGameforNextExercise(final RPSGame rpsGame) {
+        rpsGame.setChooseOnlyHardQuests(true);
         rpsGame.setMaxProgress(gameConfig.getMaxProgress());
         numExercisesDone++;
     }

@@ -41,9 +41,11 @@ public class RPSGame {
     private ProgressBar progressBar;
     private GameModeStrategy gameMode;
     private int currentProgress = 0;
+    private boolean chooseOnlyHardQuests;
 
     public RPSGame(int currentProgress) {
         this.currentProgress = currentProgress;
+        this.chooseOnlyHardQuests = false;
     }
 
     public void start(final Context gameView, final GameModeStrategy gameMode) {
@@ -77,7 +79,7 @@ public class RPSGame {
             startProgressCountDown(currentProgress);
         }
 
-        if (new Random().nextInt(5) >= 2) {
+        if (chooseOnlyHardQuests || new Random().nextInt(5) >= 2) {
             currentExercise = exerciseFactory.hardExercise();
         } else {
             currentExercise = exerciseFactory.easyExercise();
@@ -213,5 +215,9 @@ public class RPSGame {
 
     public void setMaxProgress(final int maxProgress) {
         this.maxProgress = maxProgress;
+    }
+
+    public void setChooseOnlyHardQuests(boolean chooseOnlyHardQuests) {
+        this.chooseOnlyHardQuests = chooseOnlyHardQuests;
     }
 }

@@ -144,7 +144,8 @@ public class RPSGame {
     public ExerciseResult solveWith(Gesture answer) {
         stopProgressBarTask();
         ProgressBar progressBar = getGameViewProgressBar();
-        ResultChecker resultChecker = new ResultChecker(progressBar.getMax());
+        int minPoints = gameMode.getGameConfig().getStartPoints();
+        ResultChecker resultChecker = new ResultChecker(progressBar.getMax(), minPoints);
         ExerciseResult result = resultChecker.checkAnswer(currentExercise.getQuest(), answer, progressBar.getProgress());
 
         PreferenceSingleton.getHandler(gameView).setCurrentProgress(0);

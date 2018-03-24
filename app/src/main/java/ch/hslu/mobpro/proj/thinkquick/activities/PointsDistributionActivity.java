@@ -106,7 +106,7 @@ public class PointsDistributionActivity extends AppCompatActivity {
         DataPoint[] pointSerie = new DataPoint[100];
 
         for (int i = 0; i < 100; i++) {
-            pointSerie[i] = new DataPoint(i, PointCalculator.calcPoints(100 - i, 100));
+            pointSerie[i] = new DataPoint(i, PointCalculator.calcPoints(100 - i, 100, 100));
         }
 
         LineGraphSeries<DataPoint> series = new LineGraphSeries<>(pointSerie);

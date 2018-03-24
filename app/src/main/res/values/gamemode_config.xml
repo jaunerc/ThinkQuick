@@ -4,7 +4,7 @@
     <integer name="hardcore_maxprogress">100</integer>
     <integer name="surprise_maxprogress">100</integer>
     <integer name="endless_startpoints">100</integer>
-    <integer name="hardcore_startpoints">100</integer>
+    <integer name="hardcore_startpoints">150</integer>
     <integer name="surprise_startpoints">100</integer>
     <integer name="endless_startlife">3</integer>
     <integer name="hardcore_startlife">0</integer>

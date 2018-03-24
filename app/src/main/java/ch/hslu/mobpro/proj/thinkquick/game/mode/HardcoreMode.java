@@ -6,7 +6,7 @@ import android.content.SharedPreferences;
 import ch.hslu.mobpro.proj.thinkquick.game.RPSGame;
 
 /**
- *
+ * This class represents the hardcore game mode.
  */
 
 public class HardcoreMode implements GameModeStrategy {

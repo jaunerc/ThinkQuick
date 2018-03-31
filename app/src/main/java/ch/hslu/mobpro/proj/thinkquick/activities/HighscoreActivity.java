@@ -52,7 +52,7 @@ public class HighscoreActivity extends AppCompatActivity {
             int points = ((DbResultsEntry) dbResultsEntry).getPoints();
             String date = ((DbResultsEntry) dbResultsEntry).getDate();
             String mode = ((DbResultsEntry) dbResultsEntry).getMode();
-            values[index] = date + "\t\t\t\t\t\t" + points + "\t\t\t\t\t\t" + mode;
+            values[index] = date + "\t\t\t\t\t\t" + mode + "\t\t\t\t\t\t" + points;
             index++;
         }
 

@@ -51,7 +51,8 @@ public class HighscoreActivity extends AppCompatActivity {
         for (Object dbResultsEntry : listResults) {
             int points = ((DbResultsEntry) dbResultsEntry).getPoints();
             String date = ((DbResultsEntry) dbResultsEntry).getDate();
-            values[index] = date + "\t\t\t\t\t\t" + points;
+            String mode = ((DbResultsEntry) dbResultsEntry).getMode();
+            values[index] = date + "\t\t\t\t\t\t" + points + "\t\t\t\t\t\t" + mode;
             index++;
         }
 

@@ -9,10 +9,11 @@ import android.database.sqlite.SQLiteOpenHelper;
  */
 
 public class DbHelper extends SQLiteOpenHelper {
-
+    private Context context;
 
     public DbHelper(final Context context) {
         super(context, DbAdapter.DB_NAME, null, DbAdapter.DB_VERSION);
+        this.context = context;
     }
 
     @Override
@@ -24,5 +25,9 @@ public class DbHelper extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
+    }
+
+    public Context getContext() {
+        return context;
     }
 }

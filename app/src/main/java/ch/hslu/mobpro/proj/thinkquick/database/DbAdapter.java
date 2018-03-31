@@ -6,6 +6,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -69,7 +71,8 @@ public class DbAdapter {
     public void insert(final int points, final Date date, final String mode) throws IOException {
         if (points > 0) {
             final ContentValues values = new ContentValues();
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd");
+            //SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd");
+            SimpleDateFormat simpleDateFormat = getSystemDateFormat();
             values.put("date", simpleDateFormat.format(date));
             values.put("points", points);
             values.put("mode", mode);
@@ -79,6 +82,11 @@ public class DbAdapter {
                 throw new IOException("The result could not be inserted.");
             }
         }
+    }
+
+    private SimpleDateFormat getSystemDateFormat() {
+        DateFormat dateFormat = android.text.format.DateFormat.getDateFormat(dbHelper.getContext());
+        return (SimpleDateFormat) dateFormat;
     }
 
     /**

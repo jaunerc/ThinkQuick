@@ -126,6 +126,7 @@ public class DbAdapter {
         final DbResultsEntry currentResult = new DbResultsEntry();
         currentResult.setPoints(cursor.getInt(1));
         currentResult.setDate(cursor.getString(0));
+        currentResult.setMode(cursor.getString(2));
         return currentResult;
     }
 }

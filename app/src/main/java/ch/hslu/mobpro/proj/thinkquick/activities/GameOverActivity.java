@@ -16,6 +16,7 @@ import ch.hslu.mobpro.proj.thinkquick.R;
 import ch.hslu.mobpro.proj.thinkquick.database.DbAdapter;
 import ch.hslu.mobpro.proj.thinkquick.database.DbResultsEntry;
 import ch.hslu.mobpro.proj.thinkquick.game.helper.PlayerStats;
+import ch.hslu.mobpro.proj.thinkquick.preferences.PreferenceSingleton;
 
 public class GameOverActivity extends AppCompatActivity {
 
@@ -33,8 +34,9 @@ public class GameOverActivity extends AppCompatActivity {
         TextView playerPoints = (TextView) findViewById(R.id.gameOverPoints);
         PlayerStats playerStats = new PlayerStats(this);
         playerPoints.setText(getString(R.string.gameover_points_description) + " " + playerStats.getPoints());
+        String gameModeLabel = PreferenceSingleton.getHandler(this).getGameModeForDb();
 
-        saveResultOnDB(playerStats.getPoints());
+        saveResultOnDB(playerStats.getPoints(), gameModeLabel);
         testGet();
 
         ConstraintLayout constraintLayout = (ConstraintLayout) findViewById(R.id.gameOverLayout);
@@ -48,10 +50,10 @@ public class GameOverActivity extends AppCompatActivity {
         });
     }
 
-    private void saveResultOnDB(final int points) {
+    private void saveResultOnDB(final int points, final String mode) {
         dbAdapter.open();
         try {
-            dbAdapter.insert(points, new Date(), "");
+            dbAdapter.insert(points, new Date(), mode);
         } catch (IOException e) {
             e.printStackTrace();
             Toast.makeText(this, "Error while writing to db...", Toast.LENGTH_SHORT);

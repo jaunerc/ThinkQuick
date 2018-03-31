@@ -96,4 +96,12 @@ public class PreferenceHandler {
     public void setOnBackPressed(boolean onBackPressed) {
         sharedPreferences.edit().putBoolean("BackPressed", onBackPressed).commit();
     }
+
+    public void setGameModeForDb(String gameModeName) {
+        sharedPreferences.edit().putString("GameModeDb", "endless");
+    }
+
+    public String getGameModeForDb() {
+        return sharedPreferences.getString("GameModeDb", "endless");
+    }
 }

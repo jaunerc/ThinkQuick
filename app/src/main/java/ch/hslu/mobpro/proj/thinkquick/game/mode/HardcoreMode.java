@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import ch.hslu.mobpro.proj.thinkquick.game.RPSGame;
+import ch.hslu.mobpro.proj.thinkquick.preferences.PreferenceHandler;
+import ch.hslu.mobpro.proj.thinkquick.preferences.PreferenceSingleton;
 
 /**
  * This class represents the hardcore game mode.
@@ -49,7 +51,8 @@ public class HardcoreMode implements GameModeStrategy {
 
     @Override
     public void gameOver(Context context) {
-
+        PreferenceHandler preferenceHandler = PreferenceSingleton.getHandler(context);
+        preferenceHandler.setGameModeForDb("Hardcore");
     }
 
     private SharedPreferences getPreferencesFromContext(final Context context) {

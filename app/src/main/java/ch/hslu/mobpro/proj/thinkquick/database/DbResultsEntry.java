@@ -7,14 +7,16 @@ package ch.hslu.mobpro.proj.thinkquick.database;
 public class DbResultsEntry {
     private int points;
     private String date;
+    private String mode;
 
-    public DbResultsEntry(int points, String date) {
+    public DbResultsEntry(int points, String date, String mode) {
         this.points = points;
         this.date = date;
+        this.mode = mode;
     }
 
     public DbResultsEntry() {
-        this(0, null);
+        this(0, null, "");
     }
 
     public int getPoints() {
@@ -31,5 +33,13 @@ public class DbResultsEntry {
 
     public void setDate(String date) {
         this.date = date;
+    }
+
+    public String getMode() {
+        return mode;
+    }
+
+    public void setMode(String mode) {
+        this.mode = mode;
     }
 }

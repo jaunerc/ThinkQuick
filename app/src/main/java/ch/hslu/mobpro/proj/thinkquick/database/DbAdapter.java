@@ -52,6 +52,7 @@ public class DbAdapter {
      * @param result The exercise result.
      * @throws IOException If the result could not be inserted.
      */
+    @Deprecated
     public void insert(final ExerciseResult result) throws IOException {
         if (result.getPoints() > 0) {
             final ContentValues values = new ContentValues();
@@ -65,12 +66,13 @@ public class DbAdapter {
         }
     }
 
-    public void insert(final int points, final Date date) throws IOException {
+    public void insert(final int points, final Date date, final String mode) throws IOException {
         if (points > 0) {
             final ContentValues values = new ContentValues();
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd");
             values.put("date", simpleDateFormat.format(date));
             values.put("points", points);
+            values.put("mode", mode);
             final long id = db.insert(DB_RESULT_TABLE, null, values);
             if (id == SQLITE_ERROR_CODE) {
                 throw new IOException("The result could not be inserted.");

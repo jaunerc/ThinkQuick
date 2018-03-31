@@ -8,6 +8,7 @@ import org.robolectric.RuntimeEnvironment;
 import org.robolectric.annotation.Config;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 
 import ch.hslu.mobpro.proj.thinkquick.BuildConfig;
@@ -33,10 +34,11 @@ public class DbAdapterTest {
 
     @Test
     public void testInsert() {
-        final ExerciseResult result = new ExerciseResult();
-        result.setPoints(1000);
+        int points = 1000;
+        Date date = new Date();
+        String mode = "hardcore";
         try {
-            adapter.insert(result);
+            adapter.insert(points, date, mode);
             List<DbResultsEntry> results = adapter.getAllResults();
             assertEquals(1, results.size());
             assertEquals(1000, results.get(0).getPoints());

@@ -18,7 +18,7 @@ public class DbHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         System.out.println("DB was created");
-        db.execSQL("CREATE TABLE " + DbAdapter.DB_RESULT_TABLE + " (date not null, points int not null, id INTEGER PRIMARY KEY);");
+        db.execSQL("CREATE TABLE " + DbAdapter.DB_RESULT_TABLE + " (date not null, points int not null, mode TEXT not null, id INTEGER PRIMARY KEY);");
     }
 
     @Override

@@ -51,7 +51,7 @@ public class GameOverActivity extends AppCompatActivity {
     private void saveResultOnDB(final int points) {
         dbAdapter.open();
         try {
-            dbAdapter.insert(points, new Date());
+            dbAdapter.insert(points, new Date(), "");
         } catch (IOException e) {
             e.printStackTrace();
             Toast.makeText(this, "Error while writing to db...", Toast.LENGTH_SHORT);

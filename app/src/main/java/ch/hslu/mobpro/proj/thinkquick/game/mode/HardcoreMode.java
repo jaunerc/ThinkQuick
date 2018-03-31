@@ -2,7 +2,9 @@ package ch.hslu.mobpro.proj.thinkquick.game.mode;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 
+import ch.hslu.mobpro.proj.thinkquick.R;
 import ch.hslu.mobpro.proj.thinkquick.game.RPSGame;
 import ch.hslu.mobpro.proj.thinkquick.preferences.PreferenceHandler;
 import ch.hslu.mobpro.proj.thinkquick.preferences.PreferenceSingleton;
@@ -46,13 +48,19 @@ public class HardcoreMode implements GameModeStrategy {
 
     @Override
     public void restoreFromPreferences(Context context) {
-
+        final SharedPreferences preferences = getPreferencesFromContext(context);
+        numExercisesDone = preferences.getInt(NUM_EXERCICES_DONE, 0);
+        Log.i("EndlessMode_num_exerc", "" + numExercisesDone);
     }
 
     @Override
     public void gameOver(Context context) {
+        final SharedPreferences preferences = getPreferencesFromContext(context);
+        preferences.edit().putInt(NUM_EXERCICES_DONE, 0).commit();
+
         PreferenceHandler preferenceHandler = PreferenceSingleton.getHandler(context);
-        preferenceHandler.setGameModeForDb("Hardcore");
+        String label = context.getResources().getString(R.string.game_mode_btn_hardcore);
+        preferenceHandler.setGameModeForDb(label);
     }
 
     private SharedPreferences getPreferencesFromContext(final Context context) {

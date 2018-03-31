@@ -4,7 +4,10 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 
+import ch.hslu.mobpro.proj.thinkquick.R;
 import ch.hslu.mobpro.proj.thinkquick.game.RPSGame;
+import ch.hslu.mobpro.proj.thinkquick.preferences.PreferenceHandler;
+import ch.hslu.mobpro.proj.thinkquick.preferences.PreferenceSingleton;
 
 /**
  * This class represents the endless game mode.
@@ -54,6 +57,10 @@ public class EndlessMode implements GameModeStrategy {
     public void gameOver(Context context) {
         final SharedPreferences preferences = getPreferencesFromContext(context);
         preferences.edit().putInt(NUM_EXERCICES_DONE, 0).commit();
+
+        PreferenceHandler preferenceHandler = PreferenceSingleton.getHandler(context);
+        String label = context.getResources().getString(R.string.game_mode_btn_endless);
+        preferenceHandler.setGameModeForDb(label);
     }
 
     private SharedPreferences getPreferencesFromContext(final Context context) {

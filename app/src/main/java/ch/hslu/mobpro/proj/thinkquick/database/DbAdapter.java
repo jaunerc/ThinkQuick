@@ -73,6 +73,7 @@ public class DbAdapter {
             values.put("date", simpleDateFormat.format(date));
             values.put("points", points);
             values.put("mode", mode);
+            System.out.println("mode - "+mode);
             final long id = db.insert(DB_RESULT_TABLE, null, values);
             if (id == SQLITE_ERROR_CODE) {
                 throw new IOException("The result could not be inserted.");

@@ -98,7 +98,7 @@ public class PreferenceHandler {
     }
 
     public void setGameModeForDb(String gameModeName) {
-        sharedPreferences.edit().putString("GameModeDb", "endless");
+        sharedPreferences.edit().putString("GameModeDb", gameModeName).commit();
     }
 
     public String getGameModeForDb() {

@@ -3,7 +3,6 @@ package ch.hslu.mobpro.proj.thinkquick.game;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 import android.widget.ProgressBar;
 
 import java.util.Random;
@@ -110,6 +109,7 @@ public class RPSGame {
 
     public void gameOver() {
         gameMode.gameOver(gameView);
+        PreferenceSingleton.getHandler(gameView).setCurrentProgress(0);
         Intent gameOver = new Intent(gameView, GameOverActivity.class);
         gameView.startActivity(gameOver);
     }

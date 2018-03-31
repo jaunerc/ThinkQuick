@@ -88,4 +88,12 @@ public class PreferenceHandler {
     public void setCurrentProgress(int progress) {
         sharedPreferences.edit().putInt("CurrentProgress", progress).commit();
     }
+
+    public boolean getOnBackPressed() {
+        return sharedPreferences.getBoolean("BackPressed", false);
+    }
+
+    public void setOnBackPressed(boolean onBackPressed) {
+        sharedPreferences.edit().putBoolean("BackPressed", onBackPressed).commit();
+    }
 }

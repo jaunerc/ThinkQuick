@@ -60,6 +60,8 @@ public class GameActivity extends AppCompatActivity {
         isProgressPaused(false);
         initializeUserControls();
         checkUserNeedTutorial();
+
+        PreferenceSingleton.getHandler(this).setOnBackPressed(false);
     }
 
     private void checkForGameMode() {
@@ -307,6 +309,7 @@ public class GameActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         if (rpsGame != null) {
+            PreferenceSingleton.getHandler(gameContext).setOnBackPressed(true);
             rpsGame.gameOver();
         } else {
             startActivity(new Intent(this, MainActivity.class));
@@ -315,8 +318,11 @@ public class GameActivity extends AppCompatActivity {
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-        ProgressBar progressBar = (ProgressBar) findViewById(R.id.timeView);
-        PreferenceSingleton.getHandler(gameContext).setCurrentProgress(progressBar.getProgress());
+        if (PreferenceSingleton.getHandler(gameContext).getOnBackPressed() == false) {
+            ProgressBar progressBar = (ProgressBar) findViewById(R.id.timeView);
+            PreferenceSingleton.getHandler(gameContext).setCurrentProgress(progressBar.getProgress());
+        }
+
         outState.putInt(GAME_MODE_EXTRA, gameModeIndex);
         super.onSaveInstanceState(outState);
     }

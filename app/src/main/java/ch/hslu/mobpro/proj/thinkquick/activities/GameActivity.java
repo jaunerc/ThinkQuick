@@ -2,6 +2,7 @@ package ch.hslu.mobpro.proj.thinkquick.activities;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
@@ -55,6 +56,8 @@ public class GameActivity extends AppCompatActivity {
 
         countdownActivity = new Intent(this, CountdownActivity.class);
         gameContext = this;
+
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LOCKED);
 
         checkForGameMode();
         isProgressPaused(false);

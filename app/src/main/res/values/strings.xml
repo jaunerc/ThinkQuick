@@ -37,4 +37,5 @@
     <string name="delete_highscore">Do you really want to clear your highscore history?</string>
     <string name="delete_approve">Yes</string>
     <string name="delete_deny">No</string>
+    <string name="gameover_info_text">Tap to continue</string>
 </resources>

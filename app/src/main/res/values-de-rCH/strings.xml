@@ -37,4 +37,5 @@
     <string name="delete_highscore">Möchtest du wirklich deine History löschen?</string>
     <string name="delete_approve">Ja</string>
     <string name="delete_deny">Nein</string>
+    <string name="gameover_info_text">Tippe um Fortzufahren</string>
 </resources>

@@ -1,10 +1,10 @@
 package ch.hslu.mobpro.proj.thinkquick.activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.constraint.ConstraintLayout;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,6 +19,7 @@ import ch.hslu.mobpro.proj.thinkquick.game.helper.PlayerStats;
 import ch.hslu.mobpro.proj.thinkquick.preferences.PreferenceSingleton;
 
 public class GameOverActivity extends AppCompatActivity {
+    private static final int MAINACTIVITY_DELAY = 2000;
 
     private Intent mainActivity;
     private DbAdapter dbAdapter;
@@ -39,15 +40,16 @@ public class GameOverActivity extends AppCompatActivity {
         saveResultOnDB(playerStats.getPoints(), gameModeLabel);
         testGet();
 
-        ConstraintLayout constraintLayout = (ConstraintLayout) findViewById(R.id.gameOverLayout);
-        constraintLayout.setOnClickListener(new View.OnClickListener() {
-
+        final Context context = this;
+        final Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
             @Override
-            public void onClick(View v) {
-
-                startActivity(mainActivity);
+            public void run() {
+                Intent intent = new Intent(context, MainActivity.class);
+                startActivity(intent);
+                finish();
             }
-        });
+        }, MAINACTIVITY_DELAY);
     }
 
     private void saveResultOnDB(final int points, final String mode) {

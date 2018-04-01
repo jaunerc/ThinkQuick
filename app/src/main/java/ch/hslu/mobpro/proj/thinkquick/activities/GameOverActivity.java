@@ -4,7 +4,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,9 +22,9 @@ import ch.hslu.mobpro.proj.thinkquick.preferences.PreferenceSingleton;
 
 public class GameOverActivity extends AppCompatActivity {
     private static final int MAINACTIVITY_DELAY = 2000;
-
-    private Intent mainActivity;
     private DbAdapter dbAdapter;
+    private Handler handler;
+    private Runnable startMain;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +32,6 @@ public class GameOverActivity extends AppCompatActivity {
         setContentView(R.layout.activity_game_over);
 
         dbAdapter = new DbAdapter(this);
-        mainActivity = new Intent(this, MainActivity.class);
 
         TextView playerPoints = (TextView) findViewById(R.id.gameOverPoints);
         PlayerStats playerStats = new PlayerStats(this);
@@ -41,15 +42,27 @@ public class GameOverActivity extends AppCompatActivity {
         testGet();
 
         final Context context = this;
-        final Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
+        handler = new Handler();
+        startMain = new Runnable() {
             @Override
             public void run() {
                 Intent intent = new Intent(context, MainActivity.class);
                 startActivity(intent);
                 finish();
             }
-        }, MAINACTIVITY_DELAY);
+        };
+        handler.postDelayed(startMain, MAINACTIVITY_DELAY);
+
+        ConstraintLayout constraintLayout = (ConstraintLayout) findViewById(R.id.gameOverLayout);
+        constraintLayout.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, MainActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
     }
 
     private void saveResultOnDB(final int points, final String mode) {
@@ -80,5 +93,17 @@ public class GameOverActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         startActivity(new Intent(this, MainActivity.class));
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        handler.removeCallbacks(startMain);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        handler.postDelayed(startMain, MAINACTIVITY_DELAY);
     }
 }

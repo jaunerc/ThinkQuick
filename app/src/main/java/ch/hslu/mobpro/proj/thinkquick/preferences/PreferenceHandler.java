@@ -80,4 +80,28 @@ public class PreferenceHandler {
     public void setPlayerLife(int playerLife) {
         sharedPreferences.edit().putInt("PlayerLife", playerLife).commit();
     }
+
+    public int getCurrentProgress() {
+        return sharedPreferences.getInt("CurrentProgress", 0);
+    }
+
+    public void setCurrentProgress(int progress) {
+        sharedPreferences.edit().putInt("CurrentProgress", progress).commit();
+    }
+
+    public boolean getOnBackPressed() {
+        return sharedPreferences.getBoolean("BackPressed", false);
+    }
+
+    public void setOnBackPressed(boolean onBackPressed) {
+        sharedPreferences.edit().putBoolean("BackPressed", onBackPressed).commit();
+    }
+
+    public void setGameModeForDb(String gameModeName) {
+        sharedPreferences.edit().putString("GameModeDb", gameModeName).commit();
+    }
+
+    public String getGameModeForDb() {
+        return sharedPreferences.getString("GameModeDb", "endless");
+    }
 }

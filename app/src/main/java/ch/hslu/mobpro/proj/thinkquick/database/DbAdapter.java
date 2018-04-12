@@ -6,6 +6,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -52,6 +54,7 @@ public class DbAdapter {
      * @param result The exercise result.
      * @throws IOException If the result could not be inserted.
      */
+    @Deprecated
     public void insert(final ExerciseResult result) throws IOException {
         if (result.getPoints() > 0) {
             final ContentValues values = new ContentValues();
@@ -65,17 +68,25 @@ public class DbAdapter {
         }
     }
 
-    public void insert(final int points, final Date date) throws IOException {
+    public void insert(final int points, final Date date, final String mode) throws IOException {
         if (points > 0) {
             final ContentValues values = new ContentValues();
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd");
+            //SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd");
+            SimpleDateFormat simpleDateFormat = getSystemDateFormat();
             values.put("date", simpleDateFormat.format(date));
             values.put("points", points);
+            values.put("mode", mode);
+            System.out.println("mode - "+mode);
             final long id = db.insert(DB_RESULT_TABLE, null, values);
             if (id == SQLITE_ERROR_CODE) {
                 throw new IOException("The result could not be inserted.");
             }
         }
+    }
+
+    private SimpleDateFormat getSystemDateFormat() {
+        DateFormat dateFormat = android.text.format.DateFormat.getDateFormat(dbHelper.getContext());
+        return (SimpleDateFormat) dateFormat;
     }
 
     /**
@@ -124,6 +135,7 @@ public class DbAdapter {
         final DbResultsEntry currentResult = new DbResultsEntry();
         currentResult.setPoints(cursor.getInt(1));
         currentResult.setDate(cursor.getString(0));
+        currentResult.setMode(cursor.getString(2));
         return currentResult;
     }
 }

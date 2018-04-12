@@ -2,11 +2,11 @@ package ch.hslu.mobpro.proj.thinkquick.activities;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
@@ -45,7 +45,6 @@ public class GameActivity extends AppCompatActivity {
     private Context gameContext;
     private Quest currentQuest;
     private RPSGame rpsGame;
-    private String KEY_COUNTER = "OnSaveInstance";
     private ImageButton rock, paper, scissor;
     private Button skip;
     private int gameModeIndex;
@@ -58,10 +57,14 @@ public class GameActivity extends AppCompatActivity {
         countdownActivity = new Intent(this, CountdownActivity.class);
         gameContext = this;
 
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LOCKED);
+
         checkForGameMode();
         isProgressPaused(false);
         initializeUserControls();
         checkUserNeedTutorial();
+
+        PreferenceSingleton.getHandler(this).setOnBackPressed(false);
     }
 
     private void checkForGameMode() {
@@ -204,7 +207,8 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void initGame() {
-        rpsGame = new RPSGame();
+        int currentProgress = PreferenceSingleton.getHandler(gameContext).getCurrentProgress();
+        rpsGame = new RPSGame(currentProgress);
     }
 
     private void checkUserNeedTutorial() {
@@ -308,6 +312,7 @@ public class GameActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         if (rpsGame != null) {
+            PreferenceSingleton.getHandler(gameContext).setOnBackPressed(true);
             rpsGame.gameOver();
         } else {
             startActivity(new Intent(this, MainActivity.class));
@@ -316,17 +321,18 @@ public class GameActivity extends AppCompatActivity {
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-        ProgressBar progressBar = (ProgressBar) findViewById(R.id.timeView);
-        outState.putInt(KEY_COUNTER, progressBar.getProgress());
+        if (PreferenceSingleton.getHandler(gameContext).getOnBackPressed() == false) {
+            ProgressBar progressBar = (ProgressBar) findViewById(R.id.timeView);
+            PreferenceSingleton.getHandler(gameContext).setCurrentProgress(progressBar.getProgress());
+        }
+
         outState.putInt(GAME_MODE_EXTRA, gameModeIndex);
         super.onSaveInstanceState(outState);
     }
 
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
-        int currentProgress = savedInstanceState.getInt(KEY_COUNTER);
         gameModeIndex = savedInstanceState.getInt(GAME_MODE_EXTRA);
-        rpsGame.orientationChanged(currentProgress);
         super.onRestoreInstanceState(savedInstanceState);
     }
 

@@ -12,11 +12,11 @@ public class PointCalculator {
 
     private PointCalculator() {}
 
-    public static int calcPoints(int currentProgress, int maxProgress) {
+    public static int calcPoints(int currentProgress, int maxProgress, int minPoints) {
         float percentage = getPercentage(maxProgress, currentProgress);
         int points = algorithm(percentage);
-        if (points < MIN_POINTS) {
-            points = MIN_POINTS;
+        if (points < minPoints) {
+            points = minPoints;
         }
         return points;
     }

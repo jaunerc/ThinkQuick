@@ -10,6 +10,8 @@ import ch.hslu.mobpro.proj.thinkquick.R;
 
 public class SplashActivity extends AppCompatActivity {
     private static final int MAINACTIVITY_DELAY = 4000;
+    private Handler handler;
+    private Runnable startMain;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,14 +22,27 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     private void startMainActivityDelayed(final Context context) {
-        final Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
+        handler = new Handler();
+        startMain = new Runnable() {
             @Override
             public void run() {
                 Intent intent = new Intent(context, MainActivity.class);
                 startActivity(intent);
                 finish();
             }
-        }, MAINACTIVITY_DELAY);
+        };
+        handler.postDelayed(startMain, MAINACTIVITY_DELAY);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        handler.removeCallbacks(startMain);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        handler.postDelayed(startMain, MAINACTIVITY_DELAY);
     }
 }

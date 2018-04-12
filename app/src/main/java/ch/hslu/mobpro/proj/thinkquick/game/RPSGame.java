@@ -39,6 +39,13 @@ public class RPSGame {
     private Context gameView;
     private ProgressBar progressBar;
     private GameModeStrategy gameMode;
+    private int currentProgress = 0;
+    private boolean chooseOnlyHardQuests;
+
+    public RPSGame(int currentProgress) {
+        this.currentProgress = currentProgress;
+        this.chooseOnlyHardQuests = false;
+    }
 
     public void start(final Context gameView, final GameModeStrategy gameMode) {
         this.gameView = gameView;
@@ -64,8 +71,14 @@ public class RPSGame {
 
     public void nextExercise() {
         prepareNextExercise();
-        startProgressCountDown();
-        if (new Random().nextInt(5) >= 2) {
+
+        if (currentProgress == 0) {
+            startProgressCountDown();
+        } else {
+            startProgressCountDown(currentProgress);
+        }
+
+        if (chooseOnlyHardQuests || new Random().nextInt(5) >= 2) {
             currentExercise = exerciseFactory.hardExercise();
         } else {
             currentExercise = exerciseFactory.easyExercise();
@@ -96,6 +109,7 @@ public class RPSGame {
 
     public void gameOver() {
         gameMode.gameOver(gameView);
+        PreferenceSingleton.getHandler(gameView).setCurrentProgress(0);
         Intent gameOver = new Intent(gameView, GameOverActivity.class);
         gameView.startActivity(gameOver);
     }
@@ -104,6 +118,10 @@ public class RPSGame {
         stopProgressBarTask();
         playerStats.awardPoints(-100);
         PreferenceSingleton.getHandler(gameView).setExerciseResult(UserAnswer.SKIPPED);
+
+        PreferenceSingleton.getHandler(gameView).setCurrentProgress(0);
+        progressBar.setProgress(0);
+
         showCountDownActivity();
     }
 
@@ -121,14 +139,20 @@ public class RPSGame {
     }
 
     public void timeUp() {
+        PreferenceSingleton.getHandler(gameView).setCurrentProgress(0);
         deductPlayerLife();
     }
 
     public ExerciseResult solveWith(Gesture answer) {
         stopProgressBarTask();
         ProgressBar progressBar = getGameViewProgressBar();
-        ResultChecker resultChecker = new ResultChecker(progressBar.getMax());
+        int minPoints = gameMode.getGameConfig().getStartPoints();
+        ResultChecker resultChecker = new ResultChecker(progressBar.getMax(), minPoints);
         ExerciseResult result = resultChecker.checkAnswer(currentExercise.getQuest(), answer, progressBar.getProgress());
+
+        PreferenceSingleton.getHandler(gameView).setCurrentProgress(0);
+        progressBar.setProgress(0);
+
         return result;
     }
 
@@ -181,11 +205,6 @@ public class RPSGame {
         return (ProgressBar) ((Activity) gameView).findViewById(R.id.timeView);
     }
 
-    public void orientationChanged(int currentProgress) {
-        stopProgressBarTask();
-        startProgressCountDown(currentProgress);
-    }
-
     public GameModeStrategy getGameMode() {
         return gameMode;
     }
@@ -196,5 +215,9 @@ public class RPSGame {
 
     public void setMaxProgress(final int maxProgress) {
         this.maxProgress = maxProgress;
+    }
+
+    public void setChooseOnlyHardQuests(boolean chooseOnlyHardQuests) {
+        this.chooseOnlyHardQuests = chooseOnlyHardQuests;
     }
 }
